@@ -1,4 +1,4 @@
-// ─── Données synthétiques — DÉMO SIMULÉE VMS NEXUS ────────────────────────
+// ─── Données synthétiques — DÉMO SIMULÉE VMS SMART ────────────────────────
 // AVERTISSEMENT : Toutes les données ci-dessous sont simulées à des fins de
 // démonstration pour l'Ideathon 2026. Elles ne représentent pas des données réelles
 // de VMS Industrie.
@@ -288,7 +288,7 @@ export const ALERTES: AlerteStock[] = [
     agenceId: "ag-001",
     produitId: "vms-cirta-125",
     type: "recommandation_transfert",
-    message: "Recommandation VMS Nexus — Agence Blida dispose de 8 Cirta 125 (excédent net de 4 unités après protection de son stock de sécurité).",
+    message: "Recommandation VMS SMART — Agence Blida dispose de 8 Cirta 125 (excédent net de 4 unités après protection de son stock de sécurité).",
     priorite: "moyenne",
     date: "21 Nov 2026, 10:00",
     lue: false,

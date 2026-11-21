@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import {
   Building2,
@@ -119,15 +120,22 @@ export default function Navbar({ currentRole }: NavbarProps) {
         {/* Brand & Portal Title */}
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-900 to-indigo-700 flex items-center justify-center text-white shadow-sm ring-1 ring-slate-900/10">
-              <Shield className="w-5 h-5 text-indigo-300" />
+            <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1 shadow-xs">
+              <Image
+                src="/image.png"
+                alt="Logo VMS SMART"
+                width={36}
+                height={36}
+                className="h-8 w-auto object-contain"
+                priority
+              />
             </div>
             <div>
-              <div className="font-bold text-slate-900 tracking-tight text-base leading-none">
-                NEXUS<span className="text-indigo-600 font-extrabold">CORE</span>
+              <div className="font-extrabold text-slate-900 tracking-tight text-base leading-none">
+                VMS <span className="text-teal-600 font-extrabold">SMART</span>
               </div>
               <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wider mt-0.5">
-                Plateforme Opérationnelle
+                Gestion des stocks & prévisions
               </div>
             </div>
           </Link>

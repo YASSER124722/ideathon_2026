@@ -1,4 +1,4 @@
-// ─── Types de données VMS Nexus ─────────────────────────────────────────────
+// ─── Types de données VMS SMART ─────────────────────────────────────────────
 
 export interface UniteDeProduction {
   id: string;

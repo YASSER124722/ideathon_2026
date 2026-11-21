@@ -13,17 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NexusCore - Portail Multi-Entités (Agence, Production & Direction)",
-  description: "Plateforme intégrée d'entreprise sans backend - Ideathon 2026",
+  title: "VMS SMART - Plateforme Intelligente de Gestion des Stocks & Prévisions",
+  description:
+    "Application intelligente d'anticipation de la demande et de gestion des stocks pour VMS Industrie - Ideathon 2026",
+  icons: {
+    icon: "/image.png",
+  },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-white text-slate-900">{children}</body>
     </html>
   );
 }

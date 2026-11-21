@@ -3,7 +3,7 @@ import type { StockRecord, StatutStock, LigneInventaire } from "./types";
 import { PRODUITS } from "./data";
 
 /**
- * Calcule le statut du stock selon les règles VMS Nexus.
+ * Calcule le statut du stock selon les règles VMS SMART.
  * - critique  : quantité = 0 ou inférieure à la demande sur le délai de réapprovisionnement
  * - alerte    : quantité < stock minimum (sécurité)
  * - excedent  : quantité > stock minimum * 3

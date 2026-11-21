@@ -638,7 +638,7 @@ export default function AgenceDashboard() {
               </div>
             </div>
 
-            {/* Colonne Droite : Alertes Prioritaires VMS Nexus */}
+            {/* Colonne Droite : Alertes Prioritaires VMS SMART */}
             <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -705,13 +705,13 @@ export default function AgenceDashboard() {
             </div>
           </div>
 
-          {/* Recommandations Intelligentes VMS Nexus (§4.3 AGENTS.md) */}
+          {/* Recommandations Intelligentes VMS SMART (§4.3 AGENTS.md) */}
           <div className="bg-gradient-to-br from-slate-900 to-[#122345] text-white rounded-2xl p-6 shadow-md border border-slate-800">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <div className="flex items-center gap-2 text-teal-400 text-xs font-bold uppercase tracking-wider">
                   <Sparkles className="w-4 h-4" />
-                  Moteur d&apos;Optimisation & Recommandations Intelligentes (§4.3)
+                  Moteur d&apos;Optimisation & Recommandations Intelligentes VMS SMART (§4.3)
                 </div>
                 <h3 className="text-base font-bold text-white mt-1">
                   Recommandations d&apos;Équilibrage de Stock Proposées
@@ -1167,7 +1167,7 @@ export default function AgenceDashboard() {
                   Gestion des Transferts Inter-Agences & Réapprovisionnements UP
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Workflow d&apos;acheminement conforme aux rôles VMS Nexus (§4.3 & §4.4)
+                  Workflow d&apos;acheminement conforme aux rôles VMS SMART (§4.3 & §4.4)
                 </p>
               </div>
 
@@ -1753,7 +1753,7 @@ export default function AgenceDashboard() {
                 <div><span className="text-red-400">Statut :</span> REJET IMMÉDIAT (SEGMENTATION RÉSEAU)</div>
               </div>
               <p className="text-[11px] text-slate-500 leading-relaxed">
-                Conformément aux règles de cloisonnement du système VMS Nexus, les agences ne peuvent
+                Conformément aux règles de cloisonnement du système VMS SMART, les agences ne peuvent
                 pas interroger les stocks ou documents sensibles des autres Unités de Production sans
                 autorisation centralisée de la Direction.
               </p>

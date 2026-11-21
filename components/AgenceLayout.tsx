@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -66,7 +67,7 @@ export default function AgenceLayout({
           Données simulées
         </span>
         <span className="font-medium">
-          Démonstration Prototype Hackathon 2026 — Données synthétiques d&apos;activité VMS Industrie
+          Démonstration Prototype VMS SMART — Hackathon 2026 — Données synthétiques d&apos;activité VMS Industrie
         </span>
       </div>
 
@@ -75,20 +76,27 @@ export default function AgenceLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo & Titre de l'application */}
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center shadow-md shadow-teal-500/20">
-              <Gauge className="w-5 h-5 text-white" />
+            <div className="h-10 w-10 rounded-xl bg-white/95 flex items-center justify-center p-1 shadow-md shadow-black/20">
+              <Image
+                src="/image.png"
+                alt="Logo VMS SMART"
+                width={36}
+                height={36}
+                className="h-8 w-auto object-contain"
+                priority
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-white text-lg tracking-tight">
-                  VMS <span className="text-teal-400">NEXUS</span>
+                  VMS <span className="text-teal-400">SMART</span>
                 </span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30 uppercase">
                   Espace Agence
                 </span>
               </div>
               <div className="text-[10px] text-slate-400 font-medium">
-                Gestion des stocks & anticipation de la demande
+                Anticipation de la demande & gestion intelligente des stocks
               </div>
             </div>
           </div>
@@ -221,7 +229,7 @@ export default function AgenceLayout({
       <footer className="border-t border-slate-200 bg-white px-6 py-4 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>
-            VMS Nexus &bull; Défi Hackathon VMS Industrie 2026 &bull; Architecture réseau 3 tiers sécurisée
+            VMS SMART &bull; Défi Hackathon VMS Industrie 2026 &bull; Architecture réseau 3 tiers sécurisée
           </span>
           <span className="font-mono text-[11px] text-slate-400">
             Sources publiques motos : autobip.com &bull; motobladi.dz
