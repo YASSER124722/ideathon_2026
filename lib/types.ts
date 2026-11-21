@@ -25,6 +25,8 @@ export interface Produit {
   sourceUrl: string;
   dateSource: string;
   imageUrl?: string;
+  cylindree: string;
+  puissance: string;
 }
 
 export interface StockRecord {
@@ -32,7 +34,7 @@ export interface StockRecord {
   agenceId: string;
   produitId: string;
   quantiteActuelle: number;
-  stockMinimum: number; // stock de sécurité
+  stockMinimum: number; // stock de sécurité configurable
   stockEntrant: number; // en transit
   delaiReapprovisionnement: number; // jours
 }
@@ -61,7 +63,7 @@ export type StatutTransfert =
 export interface DemandeTransfert {
   id: string;
   produitId: string;
-  sourceAgenceId: string;
+  sourceAgenceId: string; // ou "up-centre" si réappro direct entrepôt
   destinationAgenceId: string;
   quantite: number;
   statut: StatutTransfert;
@@ -70,6 +72,7 @@ export interface DemandeTransfert {
   dateMiseAJour: string;
   approuvePar?: string;
   notes?: string;
+  typeTransfert?: "inter_agence" | "reappro_up";
 }
 
 export interface VenteRecord {
@@ -92,7 +95,31 @@ export interface AlerteStock {
 }
 
 export interface DonneesHistoriques {
-  mois: string; // "Jan", "Fév"…
+  mois: string; // "Mai", "Juin"…
   ventes?: number;
   prevision?: number;
+}
+
+export interface PieceRechange {
+  id: string;
+  reference: string;
+  designation: string;
+  modelesCompatibles: string[];
+  stockActuel: number;
+  stockMinimum: number;
+  demandeEstimee30j: number;
+  prixPublic: number;
+  unite: string;
+}
+
+export interface AuditSecurityEvent {
+  id: string;
+  timestamp: string;
+  userEmail: string;
+  userRole: string;
+  agenceId: string;
+  action: string;
+  ressource: string;
+  statut: "autorise" | "refuse";
+  details: string;
 }

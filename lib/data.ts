@@ -1,65 +1,76 @@
-// ─── Données synthétiques — DÉMO SIMULÉE ────────────────────────────────────
+// ─── Données synthétiques — DÉMO SIMULÉE VMS NEXUS ────────────────────────
 // AVERTISSEMENT : Toutes les données ci-dessous sont simulées à des fins de
-// démonstration. Elles ne représentent pas des données réelles de VMS Industrie.
+// démonstration pour l'Ideathon 2026. Elles ne représentent pas des données réelles
+// de VMS Industrie.
 
 import type {
   Agence,
   UniteDeProduction,
   Produit,
   StockRecord,
-  VenteRecord,
   AlerteStock,
   DemandeTransfert,
   DonneesHistoriques,
+  PieceRechange,
+  AuditSecurityEvent,
 } from "./types";
 
-// ─── Catalogue VMS (données publiques de référence) ─────────────────────────
+// ─── Catalogue Motos VMS (données publiques de référence) ───────────────────
 export const PRODUITS: Produit[] = [
   {
     id: "vms-cirta-125",
     modele: "Cirta 125",
     marque: "VMS",
-    categorie: "Routière",
+    categorie: "Scooter Urbain / Routière",
     prixPublic: 185_000,
     sourceUrl: "https://www.autobip.com/ar/prix-vms-algerie/81",
     dateSource: "2026-01",
-    imageUrl: "/public/image.png",
+    cylindree: "124.6 cc",
+    puissance: "8.6 ch à 7500 tr/min",
   },
   {
     id: "vms-clio-125",
     modele: "Clio 125",
     marque: "VMS",
-    categorie: "Routière",
+    categorie: "Scooter Citadin",
     prixPublic: 198_000,
     sourceUrl: "https://motobladi.dz/product-brand/vms/",
     dateSource: "2026-01",
+    cylindree: "124.8 cc",
+    puissance: "9.2 ch à 8000 tr/min",
   },
   {
     id: "vms-saphir-150",
     modele: "Saphir 150",
     marque: "VMS",
-    categorie: "Sportive",
+    categorie: "Maxi-Scooter GT",
     prixPublic: 245_000,
     sourceUrl: "https://motobladi.dz/product-brand/vms/",
     dateSource: "2026-01",
+    cylindree: "149.6 cc",
+    puissance: "12.0 ch à 8500 tr/min",
   },
   {
     id: "vms-cobra-250",
     modele: "Cobra 250",
     marque: "VMS",
-    categorie: "Sport",
+    categorie: "Sport Roadster",
     prixPublic: 390_000,
     sourceUrl: "https://motobladi.dz/product-brand/vms/",
     dateSource: "2026-01",
+    cylindree: "249.2 cc",
+    puissance: "21.5 ch à 9000 tr/min",
   },
   {
     id: "vms-jumper-150",
     modele: "Jumper 150",
     marque: "VMS",
-    categorie: "Utilitaire",
+    categorie: "Utilitaire & Livraison",
     prixPublic: 220_000,
     sourceUrl: "https://www.autobip.com/ar/prix-vms-algerie/81",
     dateSource: "2026-01",
+    cylindree: "149.0 cc",
+    puissance: "10.8 ch à 7500 tr/min",
   },
 ];
 
@@ -68,7 +79,7 @@ export const UNITES_PRODUCTION: UniteDeProduction[] = [
   {
     id: "up-centre",
     nom: "Unité de Production — Centre",
-    region: "Centre (Alger, Blida, Tipaza)",
+    region: "Centre (Alger, Blida, Tipaza, Boumerdès)",
     agences: ["ag-001", "ag-002", "ag-003"],
   },
   {
@@ -77,13 +88,19 @@ export const UNITES_PRODUCTION: UniteDeProduction[] = [
     region: "Est (Constantine, Annaba, Sétif)",
     agences: ["ag-004", "ag-005"],
   },
+  {
+    id: "up-ouest",
+    nom: "Unité de Production — Ouest",
+    region: "Ouest (Oran, Tlemcen, Sidi Bel Abbès)",
+    agences: ["ag-006", "ag-007"],
+  },
 ];
 
-// ─── Agences ─────────────────────────────────────────────────────────────────
+// ─── Agences du Réseau VMS ──────────────────────────────────────────────────
 export const AGENCES: Agence[] = [
   {
     id: "ag-001",
-    nom: "Agence Alger Centre",
+    nom: "Agence Alger Centre (Votre agence)",
     wilaya: "Alger",
     uniteDeProductionId: "up-centre",
     responsable: "Karim Benali",
@@ -91,7 +108,7 @@ export const AGENCES: Agence[] = [
   },
   {
     id: "ag-002",
-    nom: "Agence Blida",
+    nom: "Agence Blida (Agence voisine)",
     wilaya: "Blida",
     uniteDeProductionId: "up-centre",
     responsable: "Sara Mansouri",
@@ -99,7 +116,7 @@ export const AGENCES: Agence[] = [
   },
   {
     id: "ag-003",
-    nom: "Agence Tipaza",
+    nom: "Agence Tipaza (Agence voisine)",
     wilaya: "Tipaza",
     uniteDeProductionId: "up-centre",
     responsable: "Ahmed Zidane",
@@ -107,7 +124,7 @@ export const AGENCES: Agence[] = [
   },
   {
     id: "ag-004",
-    nom: "Agence Constantine",
+    nom: "Agence Constantine (Hors zone UP Centre)",
     wilaya: "Constantine",
     uniteDeProductionId: "up-est",
     responsable: "Rida Oukaci",
@@ -115,7 +132,7 @@ export const AGENCES: Agence[] = [
   },
 ];
 
-// ─── Stock (Agence Alger Centre — ag-001) ───────────────────────────────────
+// ─── Stocks initiaux de l'Agence Alger Centre (ag-001) ──────────────────────
 export const STOCKS_AG001: StockRecord[] = [
   {
     id: "s-001-cirta",
@@ -164,22 +181,75 @@ export const STOCKS_AG001: StockRecord[] = [
   },
 ];
 
-// ─── Historique des ventes (ag-001) — 7 derniers mois ───────────────────────
-export const HISTORIQUE_VENTES: DonneesHistoriques[] = [
-  { mois: "Mai", ventes: 28, prevision: 26 },
-  { mois: "Juin", ventes: 34, prevision: 31 },
-  { mois: "Juil", ventes: 41, prevision: 38 },
-  { mois: "Août", ventes: 38, prevision: 40 },
-  { mois: "Sep", ventes: 29, prevision: 32 },
-  { mois: "Oct", ventes: 33, prevision: 31 },
-  { mois: "Nov", ventes: 24, prevision: 30 },
-];
-
-// Prévisions futures (Nov–Jan)
-export const PREVISIONS_FUTURES: DonneesHistoriques[] = [
-  { mois: "Déc", prevision: 28 },
-  { mois: "Jan", prevision: 25 },
-];
+// ─── Données de prévision par modèle (Historique 7 mois + Prévisions) ────────
+export const PREVISIONS_PAR_MODELE: Record<string, DonneesHistoriques[]> = {
+  "vms-cirta-125": [
+    { mois: "Mai", ventes: 12, prevision: 11 },
+    { mois: "Juin", ventes: 14, prevision: 13 },
+    { mois: "Juil", ventes: 18, prevision: 16 },
+    { mois: "Août", ventes: 16, prevision: 17 },
+    { mois: "Sep", ventes: 11, prevision: 13 },
+    { mois: "Oct", ventes: 15, prevision: 14 },
+    { mois: "Nov", ventes: 10, prevision: 13 },
+    { mois: "Déc", prevision: 12 },
+    { mois: "Jan", prevision: 11 },
+  ],
+  "vms-clio-125": [
+    { mois: "Mai", ventes: 8, prevision: 7 },
+    { mois: "Juin", ventes: 9, prevision: 8 },
+    { mois: "Juil", ventes: 11, prevision: 10 },
+    { mois: "Août", ventes: 10, prevision: 11 },
+    { mois: "Sep", ventes: 7, prevision: 8 },
+    { mois: "Oct", ventes: 9, prevision: 8 },
+    { mois: "Nov", ventes: 6, prevision: 8 },
+    { mois: "Déc", prevision: 7 },
+    { mois: "Jan", prevision: 6 },
+  ],
+  "vms-saphir-150": [
+    { mois: "Mai", ventes: 4, prevision: 4 },
+    { mois: "Juin", ventes: 5, prevision: 5 },
+    { mois: "Juil", ventes: 7, prevision: 6 },
+    { mois: "Août", ventes: 6, prevision: 6 },
+    { mois: "Sep", ventes: 5, prevision: 5 },
+    { mois: "Oct", ventes: 4, prevision: 5 },
+    { mois: "Nov", ventes: 4, prevision: 5 },
+    { mois: "Déc", prevision: 5 },
+    { mois: "Jan", prevision: 4 },
+  ],
+  "vms-cobra-250": [
+    { mois: "Mai", ventes: 2, prevision: 2 },
+    { mois: "Juin", ventes: 3, prevision: 2 },
+    { mois: "Juil", ventes: 3, prevision: 3 },
+    { mois: "Août", ventes: 2, prevision: 3 },
+    { mois: "Sep", ventes: 2, prevision: 2 },
+    { mois: "Oct", ventes: 2, prevision: 2 },
+    { mois: "Nov", ventes: 1, prevision: 2 },
+    { mois: "Déc", prevision: 2 },
+    { mois: "Jan", prevision: 2 },
+  ],
+  "vms-jumper-150": [
+    { mois: "Mai", ventes: 5, prevision: 5 },
+    { mois: "Juin", ventes: 6, prevision: 6 },
+    { mois: "Juil", ventes: 8, prevision: 7 },
+    { mois: "Août", ventes: 7, prevision: 7 },
+    { mois: "Sep", ventes: 6, prevision: 6 },
+    { mois: "Oct", ventes: 5, prevision: 6 },
+    { mois: "Nov", ventes: 4, prevision: 6 },
+    { mois: "Déc", prevision: 5 },
+    { mois: "Jan", prevision: 5 },
+  ],
+  global: [
+    { mois: "Mai", ventes: 31, prevision: 29 },
+    { mois: "Juin", ventes: 37, prevision: 34 },
+    { mois: "Juil", ventes: 47, prevision: 42 },
+    { mois: "Août", ventes: 41, prevision: 44 },
+    { mois: "Sep", ventes: 31, prevision: 34 },
+    { mois: "Oct", ventes: 35, prevision: 35 },
+    { mois: "Nov", ventes: 25, prevision: 34 },
+    { mois: "Déc", prevision: 31 },
+    { mois: "Jan", prevision: 28 },
+  ],
+};
 
 // ─── Alertes Stock (ag-001) ───────────────────────────────────────────────────
 export const ALERTES: AlerteStock[] = [
@@ -188,9 +258,9 @@ export const ALERTES: AlerteStock[] = [
     agenceId: "ag-001",
     produitId: "vms-jumper-150",
     type: "rupture_imminente",
-    message: "Rupture totale — Jumper 150 en rupture de stock. 3 unités en transit (arrivée ~7 jours).",
+    message: "Rupture totale — Jumper 150 : 0 unité en stock. 3 unités en transit (délai estimé : 7 jours).",
     priorite: "haute",
-    date: "2026-11-21",
+    date: "21 Nov 2026, 09:15",
     lue: false,
   },
   {
@@ -198,9 +268,9 @@ export const ALERTES: AlerteStock[] = [
     agenceId: "ag-001",
     produitId: "vms-cirta-125",
     type: "stock_faible",
-    message: "Stock faible — Cirta 125 : 3 unités en stock (seuil minimum : 5). Réapprovisionnement recommandé.",
+    message: "Stock sous le seuil de sécurité — Cirta 125 : 3 unités restantes (seuil sécurité : 5). Risque de rupture sous 5 jours.",
     priorite: "haute",
-    date: "2026-11-21",
+    date: "21 Nov 2026, 08:30",
     lue: false,
   },
   {
@@ -208,9 +278,9 @@ export const ALERTES: AlerteStock[] = [
     agenceId: "ag-001",
     produitId: "vms-saphir-150",
     type: "stock_faible",
-    message: "Stock faible — Saphir 150 : 1 unité restante (seuil minimum : 3). Risque de rupture dans 7 jours.",
+    message: "Stock faible — Saphir 150 : 1 unité restante (seuil minimum : 3). Demande estimée à 5 unités sur 30 jours.",
     priorite: "haute",
-    date: "2026-11-20",
+    date: "20 Nov 2026, 17:45",
     lue: false,
   },
   {
@@ -218,60 +288,174 @@ export const ALERTES: AlerteStock[] = [
     agenceId: "ag-001",
     produitId: "vms-cirta-125",
     type: "recommandation_transfert",
-    message: "Transfert recommandé — L'Agence Blida dispose d'un excédent de Cirta 125 (8 unités disponibles). Transfert de 4 unités proposé.",
+    message: "Recommandation VMS Nexus — Agence Blida dispose de 8 Cirta 125 (excédent net de 4 unités après protection de son stock de sécurité).",
     priorite: "moyenne",
-    date: "2026-11-21",
+    date: "21 Nov 2026, 10:00",
+    lue: false,
+  },
+  {
+    id: "al-005",
+    agenceId: "ag-001",
+    produitId: "vms-clio-125",
+    type: "excedent",
+    message: "Stock excédentaire — Clio 125 : 12 unités disponibles (seuil sécurité : 4). Éligible pour transferts vers agences déficitaires.",
+    priorite: "basse",
+    date: "19 Nov 2026, 14:20",
     lue: true,
   },
 ];
 
-// ─── Demandes de Transfert (ag-001) ──────────────────────────────────────────
+// ─── Demandes de Transfert & Réapprovisionnement ──────────────────────────────
 export const TRANSFERTS: DemandeTransfert[] = [
   {
-    id: "tr-001",
+    id: "TR-2026-081",
     produitId: "vms-cirta-125",
     sourceAgenceId: "ag-002",
     destinationAgenceId: "ag-001",
     quantite: 4,
     statut: "en_attente_approbation",
-    raisonRecommandation: "Agence Alger Centre en rupture imminente ; Agence Blida dispose d'un excédent après protection de son stock de sécurité.",
-    dateCreation: "2026-11-21",
-    dateMiseAJour: "2026-11-21",
-    notes: "Transfert généré automatiquement par le moteur de recommandation VMS Nexus.",
+    raisonRecommandation: "Agence Alger Centre en rupture imminente. Agence Blida dispose de 8 Cirta 125 (seuil de sécurité protégé : 4).",
+    dateCreation: "21 Nov 2026, 10:15",
+    dateMiseAJour: "21 Nov 2026, 10:15",
+    notes: "Proposé automatiquement par l'algorithme d'optimisation inter-agences.",
+    typeTransfert: "inter_agence",
   },
   {
-    id: "tr-002",
+    id: "TR-2026-079",
+    produitId: "vms-jumper-150",
+    sourceAgenceId: "up-centre",
+    destinationAgenceId: "ag-001",
+    quantite: 3,
+    statut: "en_transit",
+    raisonRecommandation: "Réapprovisionnement direct depuis l'entrepôt central UP Centre suite à rupture de stock.",
+    dateCreation: "19 Nov 2026, 11:00",
+    dateMiseAJour: "20 Nov 2026, 09:30",
+    approuvePar: "Chef d'Unité (UP Centre)",
+    notes: "Expédié par transporteur logistique VMS — Camionnette Réf #TC-04.",
+    typeTransfert: "reappro_up",
+  },
+  {
+    id: "TR-2026-075",
     produitId: "vms-saphir-150",
     sourceAgenceId: "ag-003",
     destinationAgenceId: "ag-001",
     quantite: 2,
     statut: "proposé",
-    raisonRecommandation: "Agence Tipaza possède 5 Saphir 150 avec seulement 2 unités de stock minimum requis.",
-    dateCreation: "2026-11-20",
-    dateMiseAJour: "2026-11-20",
+    raisonRecommandation: "Agence Tipaza possède 5 Saphir 150 avec seulement 2 unités requises en stock de sécurité.",
+    dateCreation: "20 Nov 2026, 16:40",
+    dateMiseAJour: "20 Nov 2026, 16:40",
+    notes: "En attente de transmission pour validation par le chef d'Unité de Production.",
+    typeTransfert: "inter_agence",
   },
   {
-    id: "tr-003",
+    id: "TR-2026-068",
     produitId: "vms-clio-125",
     sourceAgenceId: "ag-001",
     destinationAgenceId: "ag-004",
     quantite: 3,
     statut: "approuvé",
-    raisonRecommandation: "Agence Alger Centre en excédent ; Agence Constantine en rupture imminente.",
-    dateCreation: "2026-11-18",
-    dateMiseAJour: "2026-11-19",
-    approuvePar: "Responsable UP Centre",
+    raisonRecommandation: "Cession d'excédent de l'Agence Alger vers Agence Constantine après validation par la Direction.",
+    dateCreation: "18 Nov 2026, 14:00",
+    dateMiseAJour: "19 Nov 2026, 08:30",
+    approuvePar: "Direction Centrale & UP Est",
+    typeTransfert: "inter_agence",
   },
   {
-    id: "tr-004",
-    produitId: "vms-jumper-150",
-    sourceAgenceId: "ag-002",
+    id: "TR-2026-052",
+    produitId: "vms-cirta-125",
+    sourceAgenceId: "up-centre",
     destinationAgenceId: "ag-001",
-    quantite: 2,
+    quantite: 5,
     statut: "terminé",
-    raisonRecommandation: "Transfert d'urgence suite à rupture totale.",
-    dateCreation: "2026-11-10",
-    dateMiseAJour: "2026-11-15",
-    approuvePar: "Responsable UP Centre",
+    raisonRecommandation: "Livraison mensuelle régulière de réassort.",
+    dateCreation: "10 Nov 2026, 09:00",
+    dateMiseAJour: "14 Nov 2026, 15:20",
+    approuvePar: "Chef d'Unité (UP Centre)",
+    typeTransfert: "reappro_up",
+  },
+];
+
+// ─── Pièces de Rechange & Consommables (§4.5 AGENTS.md) ──────────────────────
+export const PIECES_RECHANGE: PieceRechange[] = [
+  {
+    id: "pr-001",
+    reference: "VMS-PR-KT-125",
+    designation: "Kit Entretien Standard 5 000 km (Filtre à air, Bougie, Huile 10W40)",
+    modelesCompatibles: ["Cirta 125", "Clio 125"],
+    stockActuel: 14,
+    stockMinimum: 8,
+    demandeEstimee30j: 18,
+    prixPublic: 3_800,
+    unite: "kits",
+  },
+  {
+    id: "pr-002",
+    reference: "VMS-PR-PL-AV",
+    designation: "Plaquettes de frein avant céramique renforcée",
+    modelesCompatibles: ["Cirta 125", "Clio 125", "Saphir 150"],
+    stockActuel: 5,
+    stockMinimum: 6,
+    demandeEstimee30j: 9,
+    prixPublic: 2_400,
+    unite: "jeux",
+  },
+  {
+    id: "pr-003",
+    reference: "VMS-PR-CR-J150",
+    designation: "Courroie de transmission renforcée Kevlar",
+    modelesCompatibles: ["Jumper 150", "Saphir 150"],
+    stockActuel: 2,
+    stockMinimum: 4,
+    demandeEstimee30j: 5,
+    prixPublic: 5_200,
+    unite: "unités",
+  },
+  {
+    id: "pr-004",
+    reference: "VMS-PR-BAT-7AH",
+    designation: "Batterie Gel 12V 7Ah sans entretien",
+    modelesCompatibles: ["Cirta 125", "Clio 125", "Jumper 150", "Saphir 150"],
+    stockActuel: 8,
+    stockMinimum: 5,
+    demandeEstimee30j: 7,
+    prixPublic: 4_600,
+    unite: "unités",
+  },
+  {
+    id: "pr-005",
+    reference: "VMS-PR-PST-C250",
+    designation: "Kit piston et segments cote standard",
+    modelesCompatibles: ["Cobra 250"],
+    stockActuel: 1,
+    stockMinimum: 2,
+    demandeEstimee30j: 2,
+    prixPublic: 8_500,
+    unite: "kits",
+  },
+];
+
+// ─── Événements d'Audit & Sécurité (§4.6 & §10 AGENTS.md) ────────────────────
+export const AUDIT_SECURITE_INITIAL: AuditSecurityEvent[] = [
+  {
+    id: "SEC-LOG-01",
+    timestamp: "21 Nov 2026, 08:02:14",
+    userEmail: "karim.benali@agence.com",
+    userRole: "Agence",
+    agenceId: "ag-001 (Alger Centre)",
+    action: "AUTHENTICATION_SUCCESS",
+    ressource: "/agence/dashboard",
+    statut: "autorise",
+    details: "Connexion autorisée par jeton sécurisé. Périmètre limité à UP Centre.",
+  },
+  {
+    id: "SEC-LOG-02",
+    timestamp: "21 Nov 2026, 10:15:30",
+    userEmail: "karim.benali@agence.com",
+    userRole: "Agence",
+    agenceId: "ag-001 (Alger Centre)",
+    action: "STOCK_TRANSFER_PROPOSE",
+    ressource: "/transfers/TR-2026-081",
+    statut: "autorise",
+    details: "Proposition de transfert 4 unités Cirta 125 depuis Agence Blida.",
   },
 ];
