@@ -8,11 +8,14 @@ import type {
   UniteDeProduction,
   Produit,
   StockRecord,
+  WarehouseStockRecord,
   AlerteStock,
   DemandeTransfert,
   DonneesHistoriques,
   PieceRechange,
   AuditSecurityEvent,
+  UserAccessRecord,
+  ProductionOrder,
 } from "./types";
 
 // ─── Catalogue Motos VMS (données publiques de référence) ───────────────────
@@ -74,25 +77,34 @@ export const PRODUITS: Produit[] = [
   },
 ];
 
-// ─── Unités de Production ────────────────────────────────────────────────────
+// ─── Unités de Production (§2 & §5 AGENTS.md) ────────────────────────────────
 export const UNITES_PRODUCTION: UniteDeProduction[] = [
   {
     id: "up-centre",
     nom: "Unité de Production — Centre",
     region: "Centre (Alger, Blida, Tipaza, Boumerdès)",
     agences: ["ag-001", "ag-002", "ag-003"],
+    responsable: "Karim Mansouri",
+    capaciteEntrepot: 250,
+    stockEntrepotActuel: 142,
   },
   {
     id: "up-est",
     nom: "Unité de Production — Est",
-    region: "Est (Constantine, Annaba, Sétif)",
+    region: "Est (Constantine, Annaba, Sétif, Batna)",
     agences: ["ag-004", "ag-005"],
+    responsable: "Sofiane Zerrad",
+    capaciteEntrepot: 200,
+    stockEntrepotActuel: 98,
   },
   {
     id: "up-ouest",
     nom: "Unité de Production — Ouest",
-    region: "Ouest (Oran, Tlemcen, Sidi Bel Abbès)",
+    region: "Ouest (Oran, Tlemcen, Sidi Bel Abbès, Mostaganem)",
     agences: ["ag-006", "ag-007"],
+    responsable: "Farid Belhadj",
+    capaciteEntrepot: 220,
+    stockEntrepotActuel: 115,
   },
 ];
 
@@ -100,7 +112,7 @@ export const UNITES_PRODUCTION: UniteDeProduction[] = [
 export const AGENCES: Agence[] = [
   {
     id: "ag-001",
-    nom: "Agence Alger Centre (Votre agence)",
+    nom: "Agence Alger Centre",
     wilaya: "Alger",
     uniteDeProductionId: "up-centre",
     responsable: "Karim Benali",
@@ -108,7 +120,7 @@ export const AGENCES: Agence[] = [
   },
   {
     id: "ag-002",
-    nom: "Agence Blida (Agence voisine)",
+    nom: "Agence Blida",
     wilaya: "Blida",
     uniteDeProductionId: "up-centre",
     responsable: "Sara Mansouri",
@@ -116,7 +128,7 @@ export const AGENCES: Agence[] = [
   },
   {
     id: "ag-003",
-    nom: "Agence Tipaza (Agence voisine)",
+    nom: "Agence Tipaza",
     wilaya: "Tipaza",
     uniteDeProductionId: "up-centre",
     responsable: "Ahmed Zidane",
@@ -124,15 +136,88 @@ export const AGENCES: Agence[] = [
   },
   {
     id: "ag-004",
-    nom: "Agence Constantine (Hors zone UP Centre)",
+    nom: "Agence Constantine",
     wilaya: "Constantine",
     uniteDeProductionId: "up-est",
     responsable: "Rida Oukaci",
     email: "rida.oukaci@agence.com",
   },
+  {
+    id: "ag-005",
+    nom: "Agence Annaba",
+    wilaya: "Annaba",
+    uniteDeProductionId: "up-est",
+    responsable: "Amine Khelil",
+    email: "amine.khelil@agence.com",
+  },
+  {
+    id: "ag-006",
+    nom: "Agence Oran Médina",
+    wilaya: "Oran",
+    uniteDeProductionId: "up-ouest",
+    responsable: "Leila Bensaïd",
+    email: "leila.bensaid@agence.com",
+  },
+  {
+    id: "ag-007",
+    nom: "Agence Tlemcen",
+    wilaya: "Tlemcen",
+    uniteDeProductionId: "up-ouest",
+    responsable: "Yacine Rahmani",
+    email: "yacine.rahmani@agence.com",
+  },
 ];
 
-// ─── Stocks initiaux de l'Agence Alger Centre (ag-001) ──────────────────────
+// ─── Stock de l'Entrepôt Central UP Centre (Site Industriel) ────────────────
+export const WAREHOUSE_STOCKS_UP_CENTRE: WarehouseStockRecord[] = [
+  {
+    id: "wh-cirta",
+    uniteProductionId: "up-centre",
+    produitId: "vms-cirta-125",
+    quantiteDisponible: 45,
+    quantiteReservee: 12,
+    stockSecurite: 20,
+    cadenceFabricationSemaine: 25,
+  },
+  {
+    id: "wh-clio",
+    uniteProductionId: "up-centre",
+    produitId: "vms-clio-125",
+    quantiteDisponible: 38,
+    quantiteReservee: 8,
+    stockSecurite: 15,
+    cadenceFabricationSemaine: 20,
+  },
+  {
+    id: "wh-saphir",
+    uniteProductionId: "up-centre",
+    produitId: "vms-saphir-150",
+    quantiteDisponible: 22,
+    quantiteReservee: 5,
+    stockSecurite: 10,
+    cadenceFabricationSemaine: 12,
+  },
+  {
+    id: "wh-cobra",
+    uniteProductionId: "up-centre",
+    produitId: "vms-cobra-250",
+    quantiteDisponible: 18,
+    quantiteReservee: 3,
+    stockSecurite: 8,
+    cadenceFabricationSemaine: 8,
+  },
+  {
+    id: "wh-jumper",
+    uniteProductionId: "up-centre",
+    produitId: "vms-jumper-150",
+    quantiteDisponible: 19,
+    quantiteReservee: 6,
+    stockSecurite: 12,
+    cadenceFabricationSemaine: 15,
+  },
+];
+
+// ─── Stocks de l'Agence Alger Centre (ag-001) ──────────────────────────────
 export const STOCKS_AG001: StockRecord[] = [
   {
     id: "s-001-cirta",
@@ -181,7 +266,105 @@ export const STOCKS_AG001: StockRecord[] = [
   },
 ];
 
-// ─── Données de prévision par modèle (Historique 7 mois + Prévisions) ────────
+// ─── Stocks de l'Agence Blida (ag-002 - Agence sœur UP Centre) ──────────────
+export const STOCKS_AG002: StockRecord[] = [
+  {
+    id: "s-002-cirta",
+    agenceId: "ag-002",
+    produitId: "vms-cirta-125",
+    quantiteActuelle: 8, // EXCÉDENT ! Seuil 4 -> 4 unités transférables vers Alger !
+    stockMinimum: 4,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 7,
+  },
+  {
+    id: "s-002-clio",
+    agenceId: "ag-002",
+    produitId: "vms-clio-125",
+    quantiteActuelle: 5,
+    stockMinimum: 3,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 7,
+  },
+  {
+    id: "s-002-saphir",
+    agenceId: "ag-002",
+    produitId: "vms-saphir-150",
+    quantiteActuelle: 3,
+    stockMinimum: 2,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 10,
+  },
+  {
+    id: "s-002-cobra",
+    agenceId: "ag-002",
+    produitId: "vms-cobra-250",
+    quantiteActuelle: 2,
+    stockMinimum: 2,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 14,
+  },
+  {
+    id: "s-002-jumper",
+    agenceId: "ag-002",
+    produitId: "vms-jumper-150",
+    quantiteActuelle: 5,
+    stockMinimum: 3,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 7,
+  },
+];
+
+// ─── Stocks de l'Agence Tipaza (ag-003) ──────────────────────────────────────
+export const STOCKS_AG003: StockRecord[] = [
+  {
+    id: "s-003-cirta",
+    agenceId: "ag-003",
+    produitId: "vms-cirta-125",
+    quantiteActuelle: 4,
+    stockMinimum: 3,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 7,
+  },
+  {
+    id: "s-003-clio",
+    agenceId: "ag-003",
+    produitId: "vms-clio-125",
+    quantiteActuelle: 6,
+    stockMinimum: 3,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 7,
+  },
+  {
+    id: "s-003-saphir",
+    agenceId: "ag-003",
+    produitId: "vms-saphir-150",
+    quantiteActuelle: 5, // EXCÉDENT ! Seuil 2 -> 3 transférables
+    stockMinimum: 2,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 10,
+  },
+  {
+    id: "s-003-cobra",
+    agenceId: "ag-003",
+    produitId: "vms-cobra-250",
+    quantiteActuelle: 3,
+    stockMinimum: 2,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 14,
+  },
+  {
+    id: "s-003-jumper",
+    agenceId: "ag-003",
+    produitId: "vms-jumper-150",
+    quantiteActuelle: 2,
+    stockMinimum: 2,
+    stockEntrant: 0,
+    delaiReapprovisionnement: 7,
+  },
+];
+
+// ─── Données de prévision par modèle ────────────────────────────────────────
 export const PREVISIONS_PAR_MODELE: Record<string, DonneesHistoriques[]> = {
   "vms-cirta-125": [
     { mois: "Mai", ventes: 12, prevision: 11 },
@@ -238,27 +421,38 @@ export const PREVISIONS_PAR_MODELE: Record<string, DonneesHistoriques[]> = {
     { mois: "Déc", prevision: 5 },
     { mois: "Jan", prevision: 5 },
   ],
-  global: [
-    { mois: "Mai", ventes: 31, prevision: 29 },
-    { mois: "Juin", ventes: 37, prevision: 34 },
-    { mois: "Juil", ventes: 47, prevision: 42 },
-    { mois: "Août", ventes: 41, prevision: 44 },
-    { mois: "Sep", ventes: 31, prevision: 34 },
-    { mois: "Oct", ventes: 35, prevision: 35 },
-    { mois: "Nov", ventes: 25, prevision: 34 },
-    { mois: "Déc", prevision: 31 },
-    { mois: "Jan", prevision: 28 },
+  regional_centre: [
+    { mois: "Mai", ventes: 78, prevision: 74 },
+    { mois: "Juin", ventes: 92, prevision: 86 },
+    { mois: "Juil", ventes: 118, prevision: 105 },
+    { mois: "Août", ventes: 104, prevision: 110 },
+    { mois: "Sep", ventes: 79, prevision: 85 },
+    { mois: "Oct", ventes: 88, prevision: 87 },
+    { mois: "Nov", ventes: 64, prevision: 85 },
+    { mois: "Déc", prevision: 79 },
+    { mois: "Jan", prevision: 71 },
+  ],
+  national_vms: [
+    { mois: "Mai", ventes: 215, prevision: 205 },
+    { mois: "Juin", ventes: 254, prevision: 240 },
+    { mois: "Juil", ventes: 320, prevision: 295 },
+    { mois: "Août", ventes: 290, prevision: 305 },
+    { mois: "Sep", ventes: 220, prevision: 240 },
+    { mois: "Oct", ventes: 245, prevision: 242 },
+    { mois: "Nov", ventes: 180, prevision: 235 },
+    { mois: "Déc", prevision: 218 },
+    { mois: "Jan", prevision: 198 },
   ],
 };
 
-// ─── Alertes Stock (ag-001) ───────────────────────────────────────────────────
+// ─── Alertes Stock Réseau ───────────────────────────────────────────────────
 export const ALERTES: AlerteStock[] = [
   {
     id: "al-001",
     agenceId: "ag-001",
     produitId: "vms-jumper-150",
     type: "rupture_imminente",
-    message: "Rupture totale — Jumper 150 : 0 unité en stock. 3 unités en transit (délai estimé : 7 jours).",
+    message: "Rupture totale — Jumper 150 (Agence Alger Centre) : 0 unité en stock.",
     priorite: "haute",
     date: "21 Nov 2026, 09:15",
     lue: false,
@@ -268,39 +462,29 @@ export const ALERTES: AlerteStock[] = [
     agenceId: "ag-001",
     produitId: "vms-cirta-125",
     type: "stock_faible",
-    message: "Stock sous le seuil de sécurité — Cirta 125 : 3 unités restantes (seuil sécurité : 5). Risque de rupture sous 5 jours.",
+    message: "Stock sous le seuil de sécurité — Cirta 125 (Agence Alger Centre) : 3 unités restantes (seuil sécurité : 5).",
     priorite: "haute",
     date: "21 Nov 2026, 08:30",
     lue: false,
   },
   {
     id: "al-003",
-    agenceId: "ag-001",
-    produitId: "vms-saphir-150",
-    type: "stock_faible",
-    message: "Stock faible — Saphir 150 : 1 unité restante (seuil minimum : 3). Demande estimée à 5 unités sur 30 jours.",
-    priorite: "haute",
-    date: "20 Nov 2026, 17:45",
-    lue: false,
-  },
-  {
-    id: "al-004",
-    agenceId: "ag-001",
+    agenceId: "ag-002",
     produitId: "vms-cirta-125",
     type: "recommandation_transfert",
-    message: "Recommandation VMS SMART — Agence Blida dispose de 8 Cirta 125 (excédent net de 4 unités après protection de son stock de sécurité).",
+    message: "Opportunité de transfert inter-agences — Agence Blida dispose de 8 Cirta 125 (+4 au-dessus du seuil de sécurité).",
     priorite: "moyenne",
     date: "21 Nov 2026, 10:00",
     lue: false,
   },
   {
-    id: "al-005",
-    agenceId: "ag-001",
-    produitId: "vms-clio-125",
-    type: "excedent",
-    message: "Stock excédentaire — Clio 125 : 12 unités disponibles (seuil sécurité : 4). Éligible pour transferts vers agences déficitaires.",
-    priorite: "basse",
-    date: "19 Nov 2026, 14:20",
+    id: "al-004",
+    agenceId: "ag-004",
+    produitId: "vms-saphir-150",
+    type: "stock_faible",
+    message: "Stock bas — Constantine : 2 Saphir 150 (seuil : 4). Réassort UP Est recommandé.",
+    priorite: "moyenne",
+    date: "20 Nov 2026, 14:15",
     lue: true,
   },
 ];
@@ -314,10 +498,11 @@ export const TRANSFERTS: DemandeTransfert[] = [
     destinationAgenceId: "ag-001",
     quantite: 4,
     statut: "en_attente_approbation",
-    raisonRecommandation: "Agence Alger Centre en rupture imminente. Agence Blida dispose de 8 Cirta 125 (seuil de sécurité protégé : 4).",
+    raisonRecommandation:
+      "Agence Alger Centre en rupture imminente. Agence Blida dispose de 8 Cirta 125 (seuil de sécurité protégé : 4).",
     dateCreation: "21 Nov 2026, 10:15",
     dateMiseAJour: "21 Nov 2026, 10:15",
-    notes: "Proposé automatiquement par l'algorithme d'optimisation inter-agences.",
+    notes: "Proposé automatiquement par l'algorithme d'optimisation inter-agences VMS SMART.",
     typeTransfert: "inter_agence",
   },
   {
@@ -327,10 +512,11 @@ export const TRANSFERTS: DemandeTransfert[] = [
     destinationAgenceId: "ag-001",
     quantite: 3,
     statut: "en_transit",
-    raisonRecommandation: "Réapprovisionnement direct depuis l'entrepôt central UP Centre suite à rupture de stock.",
+    raisonRecommandation:
+      "Réapprovisionnement direct depuis l'entrepôt central UP Centre suite à rupture de stock.",
     dateCreation: "19 Nov 2026, 11:00",
     dateMiseAJour: "20 Nov 2026, 09:30",
-    approuvePar: "Chef d'Unité (UP Centre)",
+    approuvePar: "Karim Mansouri (Chef UP Centre)",
     notes: "Expédié par transporteur logistique VMS — Camionnette Réf #TC-04.",
     typeTransfert: "reappro_up",
   },
@@ -341,7 +527,8 @@ export const TRANSFERTS: DemandeTransfert[] = [
     destinationAgenceId: "ag-001",
     quantite: 2,
     statut: "proposé",
-    raisonRecommandation: "Agence Tipaza possède 5 Saphir 150 avec seulement 2 unités requises en stock de sécurité.",
+    raisonRecommandation:
+      "Agence Tipaza possède 5 Saphir 150 avec seulement 2 unités requises en stock de sécurité.",
     dateCreation: "20 Nov 2026, 16:40",
     dateMiseAJour: "20 Nov 2026, 16:40",
     notes: "En attente de transmission pour validation par le chef d'Unité de Production.",
@@ -350,15 +537,16 @@ export const TRANSFERTS: DemandeTransfert[] = [
   {
     id: "TR-2026-068",
     produitId: "vms-clio-125",
-    sourceAgenceId: "ag-001",
-    destinationAgenceId: "ag-004",
-    quantite: 3,
+    sourceAgenceId: "up-centre",
+    destinationAgenceId: "up-est",
+    quantite: 10,
     statut: "approuvé",
-    raisonRecommandation: "Cession d'excédent de l'Agence Alger vers Agence Constantine après validation par la Direction.",
+    raisonRecommandation:
+      "Transfert stratégique inter-unités : UP Centre cède 10 Clio 125 vers UP Est pour combler le déficit de la région Constantine.",
     dateCreation: "18 Nov 2026, 14:00",
     dateMiseAJour: "19 Nov 2026, 08:30",
-    approuvePar: "Direction Centrale & UP Est",
-    typeTransfert: "inter_agence",
+    approuvePar: "Dr. Amina Cherif (Direction Générale)",
+    typeTransfert: "inter_up",
   },
   {
     id: "TR-2026-052",
@@ -370,8 +558,42 @@ export const TRANSFERTS: DemandeTransfert[] = [
     raisonRecommandation: "Livraison mensuelle régulière de réassort.",
     dateCreation: "10 Nov 2026, 09:00",
     dateMiseAJour: "14 Nov 2026, 15:20",
-    approuvePar: "Chef d'Unité (UP Centre)",
+    approuvePar: "Karim Mansouri (Chef UP Centre)",
     typeTransfert: "reappro_up",
+  },
+];
+
+// ─── Ordres de Fabrication Usine (§4.3 étape 4 & §6.F AGENTS.md) ───────────
+export const ORDRES_FABRICATION: ProductionOrder[] = [
+  {
+    id: "OF-2026-042",
+    produitId: "vms-cirta-125",
+    uniteProductionId: "up-centre",
+    quantite: 50,
+    statut: "En cours",
+    dateLancement: "18 Nov 2026",
+    dateFinEstimee: "25 Nov 2026",
+    priorite: "Haute",
+  },
+  {
+    id: "OF-2026-043",
+    produitId: "vms-jumper-150",
+    uniteProductionId: "up-centre",
+    quantite: 35,
+    statut: "Planifié",
+    dateLancement: "24 Nov 2026",
+    dateFinEstimee: "02 Déc 2026",
+    priorite: "Haute",
+  },
+  {
+    id: "OF-2026-040",
+    produitId: "vms-clio-125",
+    uniteProductionId: "up-centre",
+    quantite: 40,
+    statut: "Terminé",
+    dateLancement: "10 Nov 2026",
+    dateFinEstimee: "17 Nov 2026",
+    priorite: "Normale",
   },
 ];
 
@@ -434,7 +656,56 @@ export const PIECES_RECHANGE: PieceRechange[] = [
   },
 ];
 
-// ─── Événements d'Audit & Sécurité (§4.6 & §10 AGENTS.md) ────────────────────
+// ─── Annuaire des Utilisateurs & Rôles VMS SMART (§6.H AGENTS.md) ───────────
+export const ANNUAIRE_UTILISATEURS: UserAccessRecord[] = [
+  {
+    id: "usr-001",
+    nom: "Karim Benali",
+    email: "karim.benali@agence.com",
+    role: "Agence",
+    perimetre: "Agence Alger Centre (#AG-001) - UP Centre",
+    statut: "Actif",
+    derniereConnexion: "Aujourd'hui, 08:02",
+  },
+  {
+    id: "usr-002",
+    nom: "Sara Mansouri",
+    email: "sara.mansouri@agence.com",
+    role: "Agence",
+    perimetre: "Agence Blida (#AG-002) - UP Centre",
+    statut: "Actif",
+    derniereConnexion: "Aujourd'hui, 09:14",
+  },
+  {
+    id: "usr-003",
+    nom: "Karim Mansouri",
+    email: "chef@unit_p.com",
+    role: "Unité de production",
+    perimetre: "UP Centre & 3 Agences rattachées (Alger, Blida, Tipaza)",
+    statut: "Actif",
+    derniereConnexion: "Aujourd'hui, 08:45",
+  },
+  {
+    id: "usr-004",
+    nom: "Sofiane Zerrad",
+    email: "sofiane.zerrad@unit_p.com",
+    role: "Unité de production",
+    perimetre: "UP Est & 2 Agences (Constantine, Annaba)",
+    statut: "Actif",
+    derniereConnexion: "Hier, 16:30",
+  },
+  {
+    id: "usr-005",
+    nom: "Dr. Amina Cherif",
+    email: "directeur@direction.com",
+    role: "Direction",
+    perimetre: "Direction Générale & Supervision Nationale (Toutes UP et Agences)",
+    statut: "Actif",
+    derniereConnexion: "Aujourd'hui, 07:50",
+  },
+];
+
+// ─── Journal d'Audit & Sécurité Centralisé (§4.6 & §10 AGENTS.md) ────────────
 export const AUDIT_SECURITE_INITIAL: AuditSecurityEvent[] = [
   {
     id: "SEC-LOG-01",
@@ -449,6 +720,17 @@ export const AUDIT_SECURITE_INITIAL: AuditSecurityEvent[] = [
   },
   {
     id: "SEC-LOG-02",
+    timestamp: "21 Nov 2026, 08:46:10",
+    userEmail: "chef@unit_p.com",
+    userRole: "Unité de production",
+    agenceId: "up-centre (Entrepôt)",
+    action: "WAREHOUSE_AUDIT_VIEW",
+    ressource: "/unit_p/stocks",
+    statut: "autorise",
+    details: "Consultation du stock entrepôt régional et des 3 agences rattachées.",
+  },
+  {
+    id: "SEC-LOG-03",
     timestamp: "21 Nov 2026, 10:15:30",
     userEmail: "karim.benali@agence.com",
     userRole: "Agence",
@@ -456,6 +738,17 @@ export const AUDIT_SECURITE_INITIAL: AuditSecurityEvent[] = [
     action: "STOCK_TRANSFER_PROPOSE",
     ressource: "/transfers/TR-2026-081",
     statut: "autorise",
-    details: "Proposition de transfert 4 unités Cirta 125 depuis Agence Blida.",
+    details: "Proposition de transfert 4 unités Cirta 125 depuis Agence Blida vers Alger Centre.",
+  },
+  {
+    id: "SEC-LOG-04",
+    timestamp: "21 Nov 2026, 10:35:12",
+    userEmail: "directeur@direction.com",
+    userRole: "Direction",
+    agenceId: "Direction Centrale",
+    action: "TRANSFER_INTER_UP_APPROVE",
+    ressource: "/transfers/TR-2026-068",
+    statut: "autorise",
+    details: "Approbation du transfert inter-unités de 10 Clio 125 de UP Centre vers UP Est.",
   },
 ];

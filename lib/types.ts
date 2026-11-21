@@ -4,7 +4,10 @@ export interface UniteDeProduction {
   id: string;
   nom: string;
   region: string;
-  agences: string[]; // IDs des agences
+  agences: string[]; // IDs des agences rattachées
+  responsable: string;
+  capaciteEntrepot: number; // en unités
+  stockEntrepotActuel: number;
 }
 
 export interface Agence {
@@ -37,6 +40,16 @@ export interface StockRecord {
   stockMinimum: number; // stock de sécurité configurable
   stockEntrant: number; // en transit
   delaiReapprovisionnement: number; // jours
+}
+
+export interface WarehouseStockRecord {
+  id: string;
+  uniteProductionId: string;
+  produitId: string;
+  quantiteDisponible: number;
+  quantiteReservee: number;
+  stockSecurite: number;
+  cadenceFabricationSemaine: number;
 }
 
 export type StatutStock = "critique" | "alerte" | "normal" | "excedent";
@@ -72,7 +85,7 @@ export interface DemandeTransfert {
   dateMiseAJour: string;
   approuvePar?: string;
   notes?: string;
-  typeTransfert?: "inter_agence" | "reappro_up";
+  typeTransfert?: "inter_agence" | "reappro_up" | "inter_up";
 }
 
 export interface VenteRecord {
@@ -122,4 +135,25 @@ export interface AuditSecurityEvent {
   ressource: string;
   statut: "autorise" | "refuse";
   details: string;
+}
+
+export interface UserAccessRecord {
+  id: string;
+  nom: string;
+  email: string;
+  role: "Agence" | "Unité de production" | "Direction";
+  perimetre: string;
+  statut: "Actif" | "Suspendu";
+  derniereConnexion: string;
+}
+
+export interface ProductionOrder {
+  id: string;
+  produitId: string;
+  uniteProductionId: string;
+  quantite: number;
+  statut: "Planifié" | "En cours" | "Terminé";
+  dateLancement: string;
+  dateFinEstimee: string;
+  priorite: "Haute" | "Normale";
 }
