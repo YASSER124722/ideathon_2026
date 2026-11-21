@@ -60,7 +60,7 @@ export default function AgenceLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800">
+    <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans text-slate-800">
       {/* ── Bandeau Réglementaire Démo (Conforme §3 AGENTS.md) ── */}
       <div className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-1.5 text-center text-xs text-amber-900 flex items-center justify-center gap-2">
         <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider">
@@ -72,7 +72,7 @@ export default function AgenceLayout({
       </div>
 
       {/* ── En-tête Principal (Deep Navy #0f1f3d) ── */}
-      <header className="bg-[#0f1f3d] text-white border-b border-[#1b315b] shadow-md sticky top-0 z-40">
+      <header className="bg-[#101828] text-white border-b border-[#1e293b] shadow-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo & Titre de l'application */}
           <div className="flex items-center gap-3 shrink-0">
@@ -89,9 +89,9 @@ export default function AgenceLayout({
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-white text-lg tracking-tight">
-                  VMS <span className="text-teal-400">SMART</span>
+                  VMS <span className="text-[#D90016]">SMART</span>
                 </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30 uppercase">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/15 text-[#D90016] border border-[#D90016]/30 uppercase">
                   Espace Agence
                 </span>
               </div>
@@ -102,7 +102,7 @@ export default function AgenceLayout({
           </div>
 
           {/* Navigation par Onglets Principaux */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#0b172e] p-1 rounded-xl border border-white/5">
+          <nav className="hidden lg:flex items-center gap-1 bg-[#0c1322] p-1 rounded-xl border border-white/5">
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -112,7 +112,7 @@ export default function AgenceLayout({
                   onClick={() => onTabChange(item.id)}
                   className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? "bg-teal-500 text-white shadow-md shadow-teal-500/20"
+                      ? "bg-[#D90016] text-white shadow-sm shadow-[#D90016]/20"
                       : "text-slate-300 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -125,6 +125,28 @@ export default function AgenceLayout({
 
           {/* Actions Droite : Alertes, Rôle, Déconnexion */}
           <div className="flex items-center gap-2.5">
+            {/* Sélecteur Rapide de Rôles pour Démo Facile */}
+            <div className="hidden xl:flex items-center bg-[#0c1322] border border-white/10 rounded-xl p-1 text-[11px] gap-1">
+              <span className="text-[10px] text-slate-400 px-2 font-medium">Vue :</span>
+              <button
+                onClick={() => router.push("/agence")}
+                className="px-2.5 py-1 rounded-lg font-bold bg-[#D90016] text-white transition shadow-xs"
+              >
+                1. Agence
+              </button>
+              <button
+                onClick={() => router.push("/unit_p")}
+                className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
+              >
+                2. Unité Prod.
+              </button>
+              <button
+                onClick={() => router.push("/direction")}
+                className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
+              >
+                3. Direction
+              </button>
+            </div>
             {/* Bouton Test Scénario Sécurité 2 (AGENTS.md §10) */}
             <button
               onClick={onSimulateUnauthorized}
@@ -143,7 +165,7 @@ export default function AgenceLayout({
             >
               <Bell className="w-5 h-5" />
               {alertesNonLues > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-[#0f1f3d]">
+                <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-[#101828]">
                   {alertesNonLues}
                 </span>
               )}
@@ -155,7 +177,7 @@ export default function AgenceLayout({
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl hover:bg-white/10 border border-white/10 transition cursor-pointer text-left"
               >
-                <div className="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-[#D90016] text-white flex items-center justify-center font-bold text-xs shadow-xs">
                   AG
                 </div>
                 <div className="hidden sm:block leading-tight">
@@ -208,7 +230,7 @@ export default function AgenceLayout({
                 onClick={() => onTabChange(item.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition cursor-pointer ${
                   isActive
-                    ? "bg-teal-500 text-white"
+                    ? "bg-[#D90016] text-white"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
                 }`}
               >

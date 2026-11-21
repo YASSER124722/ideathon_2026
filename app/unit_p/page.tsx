@@ -209,11 +209,11 @@ export default function UniteDeProductionPage() {
   const chartRegional = PREVISIONS_PAR_MODELE["regional_centre"];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800">
+    <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans text-slate-800">
       {/* Toast Flottant */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 animate-slideUp text-xs font-medium max-w-md">
-          <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+          <CheckCircle2 className="w-4 h-4 text-[#D90016] shrink-0" />
           <span className="flex-1">{toastMessage}</span>
           <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-white">
             <X className="w-3.5 h-3.5" />
@@ -232,7 +232,7 @@ export default function UniteDeProductionPage() {
       </div>
 
       {/* En-tête Unité de Production */}
-      <header className="bg-[#0f1f3d] text-white border-b border-[#1b315b] shadow-md sticky top-0 z-40">
+      <header className="bg-[#101828] text-white border-b border-[#1e293b] shadow-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 shrink-0">
             <div className="h-10 w-10 rounded-xl bg-white/95 flex items-center justify-center p-1 shadow-md shadow-black/20">
@@ -241,9 +241,9 @@ export default function UniteDeProductionPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-white text-lg tracking-tight">
-                  VMS <span className="text-amber-400">SMART</span>
+                  VMS <span className="text-[#D90016]">SMART</span>
                 </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/15 text-[#D90016] border border-[#D90016]/30 uppercase">
                   Unité de Production
                 </span>
               </div>
@@ -254,7 +254,7 @@ export default function UniteDeProductionPage() {
           </div>
 
           {/* Navigation Onglets */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#0b172e] p-1 rounded-xl border border-white/5">
+          <nav className="hidden lg:flex items-center gap-1 bg-[#0c1322] p-1 rounded-xl border border-white/5">
             {[
               { id: "dashboard", label: "Tableau de Bord", icon: Factory },
               { id: "warehouse", label: "Entrepôt Régional", icon: Warehouse },
@@ -271,7 +271,7 @@ export default function UniteDeProductionPage() {
                   onClick={() => setActiveTab(tab.id as UPTabId)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? "bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20"
+                      ? "bg-[#D90016] text-white font-bold shadow-sm shadow-[#D90016]/20"
                       : "text-slate-300 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -282,6 +282,28 @@ export default function UniteDeProductionPage() {
             })}
           </nav>
 
+          {/* Sélecteur Rapide de Rôles pour Démo Facile */}
+          <div className="hidden xl:flex items-center bg-[#0c1322] border border-white/10 rounded-xl p-1 text-[11px] gap-1">
+            <span className="text-[10px] text-slate-400 px-2 font-medium">Vue :</span>
+            <button
+              onClick={() => router.push("/agence")}
+              className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
+            >
+              1. Agence
+            </button>
+            <button
+              onClick={() => router.push("/unit_p")}
+              className="px-2.5 py-1 rounded-lg font-bold bg-[#D90016] text-white transition shadow-xs"
+            >
+              2. Unité Prod.
+            </button>
+            <button
+              onClick={() => router.push("/direction")}
+              className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
+            >
+              3. Direction
+            </button>
+          </div>
           {/* Actions & Profil */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right leading-tight">
@@ -301,12 +323,51 @@ export default function UniteDeProductionPage() {
 
       {/* Contenu Principal */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+        {/* ── GUIDE RAPIDE MODE D'EMPLOI UP ── */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <div className="p-2.5 rounded-xl bg-red-50 text-[#D90016] shrink-0 mt-0.5">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-bold text-slate-900">
+                    Comment piloter cette unité ? &bull; Scénario Démo Unité de Production
+                  </h2>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/10 text-[#D90016] uppercase">
+                    Rôle 2 : Chef d&apos;Unité Régionale
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  L&apos;Unité de Production supervise son entrepôt régional et ses agences. Elle arbitre les pénuries en approuvant les transferts inter-agences et déclenche les séries d&apos;assemblage usine.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
+                <span className="w-5 h-5 rounded-full bg-[#D90016] text-white text-[10px] font-bold flex items-center justify-center">1</span>
+                <span>Détecter pénurie Alger vs Blida</span>
+              </span>
+              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
+                <span className="w-5 h-5 rounded-full bg-[#27364B] text-white text-[10px] font-bold flex items-center justify-center">2</span>
+                <span>Valider dans Approbations</span>
+              </span>
+              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
+                <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center">3</span>
+                <span>Audit immuable généré</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* En-tête Titre UP */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold font-mono">
+                <span className="px-2.5 py-0.5 rounded-lg bg-[#D90016]/10 text-[#D90016] border border-[#D90016]/20 text-xs font-bold font-mono">
                   SITE INDUSTRIEL #UP-01 (CENTRE)
                 </span>
                 <span className="text-xs text-slate-500 font-medium">
@@ -324,7 +385,7 @@ export default function UniteDeProductionPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowNewOFModal(true)}
-                className="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-amber-600/20 transition cursor-pointer"
+                className="px-3.5 py-2 rounded-xl bg-[#D90016] hover:bg-[#b80013] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#D90016]/20 transition cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Lancer Ordre de Fabrication</span>
@@ -333,7 +394,7 @@ export default function UniteDeProductionPage() {
                 onClick={() => setShowInterUPModal(true)}
                 className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
               >
-                <ArrowRightLeft className="w-3.5 h-3.5 text-amber-400" />
+                <ArrowRightLeft className="w-3.5 h-3.5 text-[#D90016]" />
                 <span>Coordination Inter-UP</span>
               </button>
             </div>
@@ -344,11 +405,11 @@ export default function UniteDeProductionPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             onClick={() => setActiveTab("warehouse")}
-            className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs cursor-pointer hover:border-amber-400 transition"
+            className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs cursor-pointer hover:border-[#D90016] transition"
           >
             <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
               <span>Stock Entrepôt UP</span>
-              <span className="p-2 bg-amber-50 rounded-xl text-amber-600">
+              <span className="p-2 bg-red-50 rounded-xl text-[#D90016]">
                 <Warehouse className="w-4 h-4" />
               </span>
             </div>
@@ -356,7 +417,7 @@ export default function UniteDeProductionPage() {
               <span className="text-2xl sm:text-3xl font-extrabold text-slate-900">{totalStockWarehouse}</span>
               <span className="text-xs text-slate-500">/ 250 capacité</span>
             </div>
-            <div className="mt-2 text-[11px] text-amber-700 font-medium">
+            <div className="mt-2 text-[11px] text-[#D90016] font-medium">
               Taux d&apos;occupation entrepôt : 56.8%
             </div>
           </div>
@@ -382,21 +443,21 @@ export default function UniteDeProductionPage() {
 
           <div
             onClick={() => setActiveTab("approbations")}
-            className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs cursor-pointer hover:border-teal-400 transition"
+            className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs cursor-pointer hover:border-[#D90016] transition"
           >
             <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
               <span>Approbations en Attente</span>
-              <span className="p-2 bg-teal-50 rounded-xl text-teal-600">
+              <span className="p-2 bg-red-50 rounded-xl text-[#D90016]">
                 <Clock className="w-4 h-4" />
               </span>
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-extrabold text-teal-700">
+              <span className="text-2xl sm:text-3xl font-extrabold text-[#D90016]">
                 {transfertsEnAttente.length}
               </span>
               <span className="text-xs text-amber-600 font-bold">Transferts soumis</span>
             </div>
-            <div className="mt-2 text-[11px] text-teal-700 font-medium flex items-center gap-1">
+            <div className="mt-2 text-[11px] text-[#D90016] font-medium flex items-center gap-1">
               <span>1 transfert prioritaire Blida &rarr; Alger</span>
               <ChevronRight className="w-3 h-3" />
             </div>
@@ -433,7 +494,7 @@ export default function UniteDeProductionPage() {
                 <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                   <div>
                     <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-amber-600" />
+                      <Sparkles className="w-4 h-4 text-[#D90016]" />
                       Analyse des Écarts : Pénuries vs Excédents des Agences
                     </h2>
                     <p className="text-xs text-slate-500">
@@ -442,7 +503,7 @@ export default function UniteDeProductionPage() {
                   </div>
                   <button
                     onClick={() => setActiveTab("approbations")}
-                    className="text-xs text-amber-700 font-bold hover:underline"
+                    className="text-xs text-[#D90016] font-bold hover:underline"
                   >
                     Valider les transferts &rarr;
                   </button>
@@ -470,7 +531,7 @@ export default function UniteDeProductionPage() {
 
                       <button
                         onClick={() => handleApproveTransfer("TR-2026-081")}
-                        className="px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shrink-0 shadow-xs cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-[#D90016] hover:bg-[#b80013] text-white font-bold text-xs shrink-0 shadow-xs cursor-pointer"
                       >
                         Approuver Immédiatement
                       </button>
@@ -521,7 +582,7 @@ export default function UniteDeProductionPage() {
                         <XAxis dataKey="mois" tick={{ fontSize: 10, fill: "#64748b" }} />
                         <YAxis tick={{ fontSize: 10, fill: "#64748b" }} />
                         <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
-                        <Area type="monotone" dataKey="ventes" name="Ventes" stroke="#0d9488" fill="#0d9488" fillOpacity={0.15} />
+                        <Area type="monotone" dataKey="ventes" name="Ventes" stroke="#D90016" fill="#D90016" fillOpacity={0.15} />
                         <Area type="monotone" dataKey="prevision" name="Prévision" stroke="#f59e0b" strokeDasharray="3 3" fill="#f59e0b" fillOpacity={0.1} />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -544,14 +605,14 @@ export default function UniteDeProductionPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Warehouse className="w-4 h-4 text-amber-600" />
+                  <Warehouse className="w-4 h-4 text-[#D90016]" />
                   Inventaire de l&apos;Entrepôt Régional UP Centre
                 </h2>
                 <p className="text-xs text-slate-500">
                   Stocks tampons réservés pour l&apos;approvisionnement d&apos;urgence des agences du cluster
                 </p>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-[#D90016] border border-red-200">
                 142 / 250 unités en stock physique
               </span>
             </div>
@@ -587,7 +648,7 @@ export default function UniteDeProductionPage() {
                         <td className="px-4 py-3.5 text-right text-slate-600 font-mono">
                           {w.stockSecurite} u.
                         </td>
-                        <td className="px-4 py-3.5 text-right text-teal-700 font-bold">
+                        <td className="px-4 py-3.5 text-right text-[#D90016] font-bold">
                           +{w.cadenceFabricationSemaine} u. / sem
                         </td>
                         <td className="px-4 py-3.5 text-center">
@@ -654,19 +715,19 @@ export default function UniteDeProductionPage() {
                 </div>
 
                 {/* Agence Blida */}
-                <div className="p-4 rounded-xl border border-teal-200 bg-teal-50/40 space-y-3">
+                <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-900 text-xs">Agence Blida (#AG-002)</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-teal-800">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
                       Excédent Cirta (+4)
                     </span>
                   </div>
                   <div className="text-[11px] text-slate-500">
                     Responsable : Sara Mansouri &bull; Blida
                   </div>
-                  <div className="space-y-1.5 text-xs pt-2 border-t border-teal-200">
+                  <div className="space-y-1.5 text-xs pt-2 border-t border-emerald-200">
                     <div className="flex justify-between">
-                      <span>Cirta 125 :</span> <strong className="text-teal-700">8 u. (Min: 4) &rarr; +4 Excédent</strong>
+                      <span>Cirta 125 :</span> <strong className="text-emerald-700">8 u. (Min: 4) &rarr; +4 Excédent</strong>
                     </div>
                     <div className="flex justify-between">
                       <span>Clio 125 :</span> <strong className="text-slate-800">5 u. (Min: 3)</strong>
@@ -690,7 +751,7 @@ export default function UniteDeProductionPage() {
                   </div>
                   <div className="space-y-1.5 text-xs pt-2 border-t border-slate-200">
                     <div className="flex justify-between">
-                      <span>Saphir 150 :</span> <strong className="text-teal-700">5 u. (Min: 2) &rarr; +3 Excédent</strong>
+                      <span>Saphir 150 :</span> <strong className="text-emerald-700">5 u. (Min: 2) &rarr; +3 Excédent</strong>
                     </div>
                     <div className="flex justify-between">
                       <span>Cirta 125 :</span> <strong className="text-slate-800">4 u. (Min: 3)</strong>
@@ -713,7 +774,7 @@ export default function UniteDeProductionPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <ArrowRightLeft className="w-4 h-4 text-amber-600" />
+                  <ArrowRightLeft className="w-4 h-4 text-[#D90016]" />
                   Console d&apos;Approbation des Transferts Régionaux (§4.4 & §10)
                 </h2>
                 <p className="text-xs text-slate-500">
@@ -735,7 +796,7 @@ export default function UniteDeProductionPage() {
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-xs font-bold text-slate-900">{tr.id}</span>
                         <span className="text-slate-400">&bull;</span>
-                        <span className="font-bold text-xs text-amber-800">
+                        <span className="font-bold text-xs text-[#D90016]">
                           {p?.modele} ({tr.quantite} unités)
                         </span>
                         <span className="text-slate-400">&bull;</span>
@@ -747,7 +808,7 @@ export default function UniteDeProductionPage() {
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                           tr.statut === "approuvé"
-                            ? "bg-teal-50 text-teal-700 border border-teal-200"
+                            ? "bg-teal-50 text-emerald-700 border border-emerald-200"
                             : tr.statut === "en_attente_approbation"
                             ? "bg-amber-100 text-amber-900 font-bold"
                             : "bg-slate-100 text-slate-700"
@@ -776,7 +837,7 @@ export default function UniteDeProductionPage() {
                           </button>
                           <button
                             onClick={() => handleApproveTransfer(tr.id)}
-                            className="px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold shadow-xs transition cursor-pointer flex items-center gap-1"
+                            className="px-3 py-1.5 rounded-lg bg-[#D90016] hover:bg-[#b80013] text-white text-xs font-bold shadow-xs transition cursor-pointer flex items-center gap-1"
                           >
                             <Check className="w-3.5 h-3.5" />
                             <span>Approuver le Transfert</span>
@@ -879,7 +940,7 @@ export default function UniteDeProductionPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-teal-600" />
+                  <ShieldCheck className="w-4 h-4 text-[#D90016]" />
                   Journal d&apos;Audit & Décisions de l&apos;Unité de Production (§4.6 AGENTS.md)
                 </h2>
                 <p className="text-xs text-slate-500">
@@ -928,7 +989,7 @@ export default function UniteDeProductionPage() {
                 <select
                   value={ofModelId}
                   onChange={(e) => setOfModelId(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#D90016] focus:outline-none"
                 >
                   {PRODUITS.map((p) => (
                     <option key={p.id} value={p.id}>{p.modele} ({p.categorie})</option>
@@ -945,7 +1006,7 @@ export default function UniteDeProductionPage() {
                   required
                   value={ofQuantity}
                   onChange={(e) => setOfQuantity(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none font-bold"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#D90016] focus:outline-none font-bold"
                 />
               </div>
 
@@ -954,7 +1015,7 @@ export default function UniteDeProductionPage() {
                 <select
                   value={ofPriority}
                   onChange={(e) => setOfPriority(e.target.value as "Haute" | "Normale")}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#D90016] focus:outline-none"
                 >
                   <option value="Haute">Haute (Rupture agence imminente)</option>
                   <option value="Normale">Normale (Constitution stock tampon)</option>
@@ -965,7 +1026,7 @@ export default function UniteDeProductionPage() {
                 <button type="button" onClick={() => setShowNewOFModal(false)} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl">
                   Annuler
                 </button>
-                <button type="submit" className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold">
+                <button type="submit" className="px-4 py-2 bg-[#D90016] hover:bg-[#b80013] text-white rounded-xl font-bold">
                   Lancer l&apos;Ordre
                 </button>
               </div>

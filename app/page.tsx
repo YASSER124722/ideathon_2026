@@ -35,7 +35,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col justify-between p-4">
+    <div className="min-h-screen bg-[#F4F6F9] flex flex-col justify-between p-4">
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg border border-slate-200/80 p-6 sm:p-8">
           {/* Logo & Titre VMS SMART */}
@@ -51,7 +51,7 @@ export default function LoginPage() {
               />
             </div>
             <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
-              VMS <span className="text-teal-600">SMART</span>
+              VMS <span className="text-[#D90016]">SMART</span>
             </h1>
             <p className="text-xs text-slate-500 mt-1">
               Anticipation de la demande & gestion des stocks
@@ -77,7 +77,7 @@ export default function LoginPage() {
                   if (error) setError("");
                 }}
                 placeholder="nom@agence.com, @unit_p.com ou @direction.com"
-                className="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition"
+                className="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D90016] focus:border-[#D90016] transition"
               />
             </div>
 
@@ -90,13 +90,13 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition"
+                className="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D90016] focus:border-[#D90016] transition"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full mt-2 py-2.5 px-4 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-md shadow-teal-600/20 transition cursor-pointer"
+              className="w-full mt-2 py-2.5 px-4 bg-[#D90016] hover:bg-[#b30012] text-white font-bold text-xs rounded-xl shadow-md shadow-[#D90016]/20 transition cursor-pointer"
             >
               Se connecter
             </button>

@@ -1,12 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --vms-primary: #D90016;
+  --vms-sidebar: #101828;
+  --vms-background: #F4F6F9;
+  --vms-cards: #FFFFFF;
+  --vms-secondary: #27364B;
+  --vms-muted: #64748B;
+  --background: #F4F6F9;
   --foreground: #171717;
 }
 
 body {
-  background-color: #ffffff;
+  background-color: #F4F6F9;
   color: #171717;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;

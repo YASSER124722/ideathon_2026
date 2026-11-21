@@ -132,7 +132,7 @@ export default function Navbar({ currentRole }: NavbarProps) {
             </div>
             <div>
               <div className="font-extrabold text-slate-900 tracking-tight text-base leading-none">
-                VMS <span className="text-teal-600 font-extrabold">SMART</span>
+                VMS <span className="text-[#D90016] font-extrabold">SMART</span>
               </div>
               <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wider mt-0.5">
                 Gestion des stocks & prévisions
