@@ -440,19 +440,16 @@ export default function AgenceDashboard() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-lg bg-red-50 text-[#D90016] border border-red-200 text-xs font-bold font-mono">
-                AGENCE #AG-001
+              <span className="px-2.5 py-0.5 rounded-lg bg-red-50 text-[#D90016] border border-red-200 text-xs font-bold font-mono">
+                #AG-001
               </span>
               <span className="text-xs text-slate-500 font-medium">
-                Concessionnaire Principal &bull; Wilaya d&apos;Alger
+                Alger Centre &bull; UP Centre
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
-              Tableau de Bord &bull; Agence Alger Centre
+            <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">
+              Gestion de l&apos;Agence
             </h1>
-            <p className="text-xs text-slate-500">
-              Rattachée à l&apos;<strong>Unité de Production Centre</strong> (Entrepôt régional) &bull; Synchronisation temps réel
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
@@ -750,14 +747,14 @@ export default function AgenceDashboard() {
               <div>
                 <div className="flex items-center gap-2 text-[#D90016] text-xs font-bold uppercase tracking-wider">
                   <Sparkles className="w-4 h-4" />
-                  Moteur d&apos;Optimisation & Recommandations Intelligentes VMS SMART (§4.3)
+                  Recommandations d&apos;Équilibrage de Stock
                 </div>
                 <h3 className="text-base font-bold text-white mt-1">
                   Recommandations d&apos;Équilibrage de Stock Proposées
                 </h3>
               </div>
               <span className="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-white/10 text-slate-300">
-                Priorité 1 : Transferts Inter-Agences Régionales
+                Transferts Proposés
               </span>
             </div>
 
@@ -849,10 +846,10 @@ export default function AgenceDashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
               <div>
                 <h2 className="text-base font-bold text-slate-900">
-                  Inventaire Détaillé & Paramétrage du Stock de Sécurité
+                  Inventaire des Stocks & Seuils
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Suivi par modèle de moto &bull; Seuil de sécurité minimum paramétrable (§4.2 AGENTS.md)
+                  Disponibilité par modèle et seuils de réapprovisionnement
                 </p>
               </div>
 
@@ -1022,10 +1019,10 @@ export default function AgenceDashboard() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div>
                 <h2 className="text-base font-bold text-slate-900">
-                  Anticipation de la Demande & Analyse Prédictive (§4.1 AGENTS.md)
+                  Prévisions de la Demande (Modèle WMA)
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Méthode transparente : Moyenne mobile pondérée (WMA) accordant un poids plus fort aux jours récents
+                  Moyenne mobile pondérée sur l'historique des ventes
                 </p>
               </div>
 
@@ -1203,10 +1200,10 @@ export default function AgenceDashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div>
                 <h2 className="text-base font-bold text-slate-900">
-                  Gestion des Transferts Inter-Agences & Réapprovisionnements UP
+                  Historique & Suivi des Transferts
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Workflow d&apos;acheminement conforme aux rôles VMS SMART (§4.3 & §4.4)
+                  Demandes de réapprovisionnement UP et transferts inter-agences
                 </p>
               </div>
 
@@ -1325,10 +1322,10 @@ export default function AgenceDashboard() {
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <Wrench className="w-4 h-4 text-emerald-600" />
-                  Pièces de Rechange & Maintenance de la Flotte (§4.5 AGENTS.md)
+                  Pièces de Rechange & Consommables
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Consommables et pièces d&apos;usure corrélés au parc de motos VMS en circulation dans la wilaya
+                  Stock et prévisions corrélés au parc actif
                 </p>
               </div>
               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-[#D90016] border border-red-200">
@@ -1336,10 +1333,7 @@ export default function AgenceDashboard() {
               </span>
             </div>
 
-            <div className="my-4 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 leading-relaxed">
-              <strong>Principe directeur (AGENTS.md §4.5) :</strong> La demande en pièces de rechange ne dépend pas uniquement des ventes de motos neuves,
-              mais de l&apos;âge du parc roulant, du kilométrage moyen et des cycles d&apos;entretien périodiques (vidanges, freins, transmission).
-            </div>
+            
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
@@ -1418,10 +1412,10 @@ export default function AgenceDashboard() {
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  Cloisonnement Réseau & Contrôle d&apos;Accès RBAC (§5 & §10 AGENTS.md)
+                  Sécurité & Cloisonnement RBAC
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Démonstration du cloisonnement par Unité de Production et isolation des données sensibles
+                  Contrôle d'accès et séparation des périmètres
                 </p>
               </div>
 

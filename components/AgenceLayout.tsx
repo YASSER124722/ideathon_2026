@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -13,13 +12,10 @@ import {
   ShieldCheck,
   Bell,
   LogOut,
-  ChevronDown,
-  Gauge,
   ShieldAlert,
-  AlertTriangle,
-  Info,
-  CheckCircle2,
-  Sparkles,
+  ChevronRight,
+  Menu,
+  X,
 } from "lucide-react";
 
 export type AgenceTabId =
@@ -48,9 +44,9 @@ export default function AgenceLayout({
   onSimulateUnauthorized,
 }: AgenceLayoutProps) {
   const router = useRouter();
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const NAV_ITEMS: { id: AgenceTabId; label: string; icon: React.ElementType; badge?: number }[] = [
+  const NAV_ITEMS: { id: AgenceTabId; label: string; icon: React.ElementType }[] = [
     { id: "dashboard", label: "Tableau de Bord", icon: LayoutDashboard },
     { id: "inventaire", label: "Inventaire & Stock", icon: PackageSearch },
     { id: "previsions", label: "Prévisions & Demande", icon: TrendingUp },
@@ -59,205 +55,158 @@ export default function AgenceLayout({
     { id: "securite", label: "Périmètre & Sécurité", icon: ShieldCheck },
   ];
 
-  return (
-    <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans text-slate-800">
-      {/* ── Bandeau Réglementaire Démo (Conforme §3 AGENTS.md) ── */}
-      <div className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-1.5 text-center text-xs text-amber-900 flex items-center justify-center gap-2">
-        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider">
-          Données simulées
-        </span>
-        <span className="font-medium">
-          Démonstration Prototype VMS SMART — Hackathon 2026 — Données synthétiques d&apos;activité VMS Industrie
-        </span>
-      </div>
+  const currentTabLabel = NAV_ITEMS.find((n) => n.id === activeTab)?.label || "Tableau de Bord";
 
-      {/* ── En-tête Principal (Deep Navy #0f1f3d) ── */}
-      <header className="bg-[#101828] text-white border-b border-[#1e293b] shadow-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          {/* Logo & Titre de l'application */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="h-10 w-10 rounded-xl bg-white/95 flex items-center justify-center p-1 shadow-md shadow-black/20">
-              <Image
-                src="/image.png"
-                alt="Logo VMS SMART"
-                width={36}
-                height={36}
-                className="h-8 w-auto object-contain"
-                priority
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-white text-lg tracking-tight">
+  return (
+    <div className="min-h-screen bg-[#F4F6F9] flex font-sans text-slate-800">
+      {/* ── SIDEBAR VERTICALE (Dark Navy #101828) ── */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#101828] text-white flex flex-col justify-between border-r border-[#1e293b] transition-transform duration-200 lg:translate-x-0 ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div>
+          {/* Logo & Titre */}
+          <div className="p-5 flex items-center justify-between border-b border-[#1e293b]">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center p-1 shadow-sm">
+                <Image
+                  src="/image.png"
+                  alt="Logo VMS SMART"
+                  width={36}
+                  height={36}
+                  className="h-8 w-auto object-contain"
+                  priority
+                />
+              </div>
+              <div>
+                <div className="font-extrabold text-white text-base tracking-tight leading-none">
                   VMS <span className="text-[#D90016]">SMART</span>
-                </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/15 text-[#D90016] border border-[#D90016]/30 uppercase">
-                  Espace Agence
-                </span>
-              </div>
-              <div className="text-[10px] text-slate-400 font-medium">
-                Anticipation de la demande & gestion intelligente des stocks
+                </div>
+                <div className="mt-1 inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/15 text-[#D90016] border border-[#D90016]/30 uppercase">
+                  Agence &bull; Alger
+                </div>
               </div>
             </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-          {/* Navigation par Onglets Principaux */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#0c1322] p-1 rounded-xl border border-white/5">
+          {/* Navigation Verticale */}
+          <nav className="p-3 space-y-1">
+            <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              Menu Principal
+            </div>
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
-                  onClick={() => onTabChange(item.id)}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  onClick={() => {
+                    onTabChange(item.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                     isActive
-                      ? "bg-[#D90016] text-white shadow-sm shadow-[#D90016]/20"
-                      : "text-slate-300 hover:text-white hover:bg-white/5"
+                      ? "bg-[#D90016] text-white shadow-sm shadow-[#D90016]/30"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 shrink-0" />
-                  <span>{item.label}</span>
+                  <Icon className="w-4 h-4 shrink-0" />
+                  <span className="flex-1 text-left">{item.label}</span>
+                  {isActive && <ChevronRight className="w-3.5 h-3.5 text-white/70" />}
                 </button>
               );
             })}
           </nav>
+        </div>
 
-          {/* Actions Droite : Alertes, Rôle, Déconnexion */}
-          <div className="flex items-center gap-2.5">
-            {/* Sélecteur Rapide de Rôles pour Démo Facile */}
-            <div className="hidden xl:flex items-center bg-[#0c1322] border border-white/10 rounded-xl p-1 text-[11px] gap-1">
-              <span className="text-[10px] text-slate-400 px-2 font-medium">Vue :</span>
-              <button
-                onClick={() => router.push("/agence")}
-                className="px-2.5 py-1 rounded-lg font-bold bg-[#D90016] text-white transition shadow-xs"
-              >
-                1. Agence
-              </button>
-              <button
-                onClick={() => router.push("/unit_p")}
-                className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
-              >
-                2. Unité Prod.
-              </button>
-              <button
-                onClick={() => router.push("/direction")}
-                className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
-              >
-                3. Direction
-              </button>
+        {/* Profil & Déconnexion en bas de Sidebar */}
+        <div className="p-3 border-t border-[#1e293b]">
+          <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-[#D90016] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                AG
+              </div>
+              <div className="min-w-0">
+                <div className="text-xs font-bold text-white truncate">Karim Benali</div>
+                <div className="text-[10px] text-slate-400 truncate font-mono">karim.benali@agence.com</div>
+              </div>
             </div>
-            {/* Bouton Test Scénario Sécurité 2 (AGENTS.md §10) */}
+
+            <button
+              onClick={() => router.push("/")}
+              title="Déconnexion"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* ── ZONE DE CONTENU PRINCIPALE (À DROITE DE LA SIDEBAR) ── */}
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
+        {/* Bandeau Supérieur Épuré */}
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-slate-200/80 px-4 sm:px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <span className="font-extrabold text-sm text-slate-900">{currentTabLabel}</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-xs font-mono text-slate-500">Agence #AG-001 (Alger)</span>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-900 border border-amber-500/25 uppercase">
+              Données simulées
+            </span>
+
+            {/* Test Sécurité RBAC */}
             <button
               onClick={onSimulateUnauthorized}
-              title="Tester une tentative d'accès non autorisé à une autre UP"
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/30 transition cursor-pointer"
+              title="Tester RBAC"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-red-50 text-[#D90016] border border-red-200 hover:bg-red-100 transition cursor-pointer"
             >
-              <ShieldAlert className="w-3.5 h-3.5 text-red-400" />
-              <span>Test RBAC</span>
+              <ShieldAlert className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Test RBAC</span>
             </button>
 
-            {/* Bouton Alertes */}
+            {/* Notifications Alertes */}
             <button
               onClick={onOpenAlerts}
-              title="Consulter les alertes stock"
-              className="relative p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer"
+              title="Alertes"
+              className="relative p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition cursor-pointer"
             >
-              <Bell className="w-5 h-5" />
+              <Bell className="w-4 h-4" />
               {alertesNonLues > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-[#101828]">
+                <span className="absolute top-1.5 right-1.5 w-3.5 h-3.5 rounded-full bg-[#D90016] text-white text-[9px] font-bold flex items-center justify-center">
                   {alertesNonLues}
                 </span>
               )}
             </button>
-
-            {/* Profil Agence */}
-            <div className="relative">
-              <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl hover:bg-white/10 border border-white/10 transition cursor-pointer text-left"
-              >
-                <div className="w-8 h-8 rounded-lg bg-[#D90016] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                  AG
-                </div>
-                <div className="hidden sm:block leading-tight">
-                  <div className="text-xs font-bold text-white">Agence Alger Centre</div>
-                  <div className="text-[10px] text-slate-400">Rattachée : UP Centre (#AG-001)</div>
-                </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-              </button>
-
-              {/* Menu Profil Popover */}
-              {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 z-50 text-xs text-slate-700">
-                  <div className="px-3.5 py-2.5 border-b border-slate-100">
-                    <div className="font-bold text-slate-900">Karim Benali</div>
-                    <div className="text-[11px] font-mono text-slate-500">karim.benali@agence.com</div>
-                    <div className="mt-1 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                      Rôle 1 : Agence (Concessionnaire)
-                    </div>
-                  </div>
-
-                  <div className="px-3.5 py-2 text-[11px] text-slate-500 space-y-1">
-                    <div><strong>Zone :</strong> Wilaya d&apos;Alger</div>
-                    <div><strong>Unité de tutelle :</strong> UP Centre (Blida/Alger)</div>
-                    <div><strong>Agences sœurs :</strong> Blida, Tipaza</div>
-                  </div>
-
-                  <div className="border-t border-slate-100 pt-1 mt-1">
-                    <button
-                      onClick={() => router.push("/")}
-                      className="w-full text-left px-3.5 py-2 text-red-600 hover:bg-red-50 flex items-center gap-2 transition cursor-pointer font-medium"
-                    >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Changer de rôle / Déconnexion</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
-        </div>
+        </header>
 
-        {/* Barre de navigation mobile / petits écrans */}
-        <div className="lg:hidden border-t border-white/10 px-4 py-2 flex items-center gap-2 overflow-x-auto">
-          {NAV_ITEMS.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => onTabChange(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition cursor-pointer ${
-                  isActive
-                    ? "bg-[#D90016] text-white"
-                    : "text-slate-300 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </header>
+        {/* Contenu de la vue */}
+        <main className="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+          {children}
+        </main>
 
-      {/* ── Contenu Principal ── */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        {children}
-      </main>
-
-      {/* ── Pied de page ── */}
-      <footer className="border-t border-slate-200 bg-white px-6 py-4 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>
-            VMS SMART &bull; Défi Hackathon VMS Industrie 2026 &bull; Architecture réseau 3 tiers sécurisée
-          </span>
-          <span className="font-mono text-[11px] text-slate-400">
-            Sources publiques motos : autobip.com &bull; motobladi.dz
-          </span>
-        </div>
-      </footer>
+        <footer className="border-t border-slate-200/80 bg-white px-6 py-3 text-center text-[11px] text-slate-400">
+          VMS SMART &bull; Prototype Hackathon VMS Industrie 2026 &bull; Données de référence : autobip.com, motobladi.dz
+        </footer>
+      </div>
     </div>
   );
 }

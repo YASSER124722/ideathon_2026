@@ -33,7 +33,7 @@ import {
   Filter,
   Check,
   X,
-  ChevronRight,
+  ChevronRight, Menu,
   LogOut,
   Info,
   Server,
@@ -84,6 +84,7 @@ export default function DirectionPage() {
   // Filtre utilisateur
   const [searchUser, setSearchUser] = useState("");
   const [selectedHorizon, setSelectedHorizon] = useState<7 | 30 | 90>(30);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -156,7 +157,7 @@ export default function DirectionPage() {
   const nationalChartData = PREVISIONS_PAR_MODELE["national_vms"];
 
   return (
-    <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans text-slate-800">
+    <div className="min-h-screen bg-[#F4F6F9] flex font-sans text-slate-800">
       {/* Toast Flottant */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 animate-slideUp text-xs font-medium max-w-md">
@@ -168,40 +169,49 @@ export default function DirectionPage() {
         </div>
       )}
 
-      {/* Bandeau Prototype Démo */}
-      <div className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-1.5 text-center text-xs text-amber-900 flex items-center justify-center gap-2">
-        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500 text-white uppercase tracking-wider">
-          Données simulées
-        </span>
-        <span className="font-medium">
-          Démonstration Prototype VMS SMART — Espace Direction Générale & Administration Centrale
-        </span>
-      </div>
-
-      {/* En-tête Direction */}
-      <header className="bg-[#101828] text-white border-b border-[#1e293b] shadow-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="h-10 w-10 rounded-xl bg-white/95 flex items-center justify-center p-1 shadow-md shadow-black/20">
-              <Image src="/image.png" alt="Logo VMS SMART" width={36} height={36} className="h-8 w-auto object-contain" priority />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-white text-lg tracking-tight">
+      {/* ── SIDEBAR VERTICALE (Dark Navy #101828) ── */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#101828] text-white flex flex-col justify-between border-r border-[#1e293b] transition-transform duration-200 lg:translate-x-0 ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div>
+          {/* Logo & Titre */}
+          <div className="p-5 flex items-center justify-between border-b border-[#1e293b]">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center p-1 shadow-sm">
+                <Image
+                  src="/image.png"
+                  alt="Logo VMS SMART"
+                  width={36}
+                  height={36}
+                  className="h-8 w-auto object-contain"
+                  priority
+                />
+              </div>
+              <div>
+                <div className="font-extrabold text-white text-base tracking-tight leading-none">
                   VMS <span className="text-[#D90016]">SMART</span>
-                </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/15 text-[#D90016] border border-[#D90016]/30 uppercase">
+                </div>
+                <div className="mt-1 inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/15 text-[#D90016] border border-[#D90016]/30 uppercase">
                   Direction Générale
-                </span>
-              </div>
-              <div className="text-[10px] text-slate-400 font-medium">
-                Gouvernance nationale &bull; Supervision transversale &bull; Sécurité
+                </div>
               </div>
             </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-          {/* Navigation Onglets */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#0c1322] p-1 rounded-xl border border-white/5">
+          {/* Navigation Verticale */}
+          <nav className="p-3 space-y-1">
+            <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              Gouvernance Centrale
+            </div>
             {[
               { id: "dashboard", label: "Vue Nationale", icon: Compass },
               { id: "regions", label: "Comparatif Unités", icon: Factory },
@@ -215,61 +225,80 @@ export default function DirectionPage() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id as DirectionTabId)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  onClick={() => {
+                    setActiveTab(tab.id as DirectionTabId);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                     isActive
-                      ? "bg-[#D90016] text-white font-bold shadow-sm shadow-[#D90016]/20"
-                      : "text-slate-300 hover:text-white hover:bg-white/5"
+                      ? "bg-[#D90016] text-white shadow-sm shadow-[#D90016]/30"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span>{tab.label}</span>
+                  <Icon className="w-4 h-4 shrink-0" />
+                  <span className="flex-1 text-left">{tab.label}</span>
+                  {isActive && <ChevronRight className="w-3.5 h-3.5 text-white/70" />}
                 </button>
               );
             })}
           </nav>
+        </div>
 
-          {/* Sélecteur Rapide de Rôles pour Démo Facile */}
-          <div className="hidden xl:flex items-center bg-[#0c1322] border border-white/10 rounded-xl p-1 text-[11px] gap-1">
-            <span className="text-[10px] text-slate-400 px-2 font-medium">Vue :</span>
-            <button
-              onClick={() => router.push("/agence")}
-              className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
-            >
-              1. Agence
-            </button>
-            <button
-              onClick={() => router.push("/unit_p")}
-              className="px-2.5 py-1 rounded-lg font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
-            >
-              2. Unité Prod.
-            </button>
-            <button
-              onClick={() => router.push("/direction")}
-              className="px-2.5 py-1 rounded-lg font-bold bg-[#D90016] text-white transition shadow-xs"
-            >
-              3. Direction
-            </button>
-          </div>
-          {/* Profil */}
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:block text-right leading-tight">
-              <div className="text-xs font-bold text-white">Dr. Amina Cherif</div>
-              <div className="text-[10px] text-slate-400">Directrice Générale &bull; Siège VMS</div>
+        {/* Profil & Déconnexion en bas de Sidebar */}
+        <div className="p-3 border-t border-[#1e293b]">
+          <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-[#D90016] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                DG
+              </div>
+              <div className="min-w-0">
+                <div className="text-xs font-bold text-white truncate">Dr. Amina Cherif</div>
+                <div className="text-[10px] text-slate-400 truncate font-mono">direction@direction.com</div>
+              </div>
             </div>
-            <Link
-              href="/"
-              title="Changer de rôle / Déconnexion"
-              className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition"
+
+            <button
+              onClick={() => router.push("/")}
+              title="Déconnexion"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         </div>
-      </header>
+      </aside>
 
-      {/* Contenu Principal */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+      {/* ── ZONE DE CONTENU PRINCIPALE (À DROITE DE LA SIDEBAR) ── */}
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
+        {/* Bandeau Supérieur Épuré */}
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-slate-200/80 px-4 sm:px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <span className="font-extrabold text-sm text-slate-900">Direction Générale</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-xs font-mono text-slate-500">Supervision Nationale Réseau VMS</span>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-900 border border-amber-500/25 uppercase">
+              Données simulées
+            </span>
+            <button
+              onClick={handleResetDemoData}
+              className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5 text-red-300" />
+              <span className="hidden sm:inline">Réinitialiser</span>
+            </button>
+          </div>
+        </header>
+
+        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* ── GUIDE RAPIDE MODE D'EMPLOI DIRECTION ── */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -441,10 +470,10 @@ export default function DirectionPage() {
                   <div>
                     <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                       <TrendingUp className="w-4 h-4 text-[#D90016]" />
-                      Évolution Nationale des Ventes & Prévisions VMS SMART
+                      Ventes Nationales & Projections (Modèle WMA)
                     </h2>
                     <p className="text-xs text-slate-500">
-                      Consolidation des 3 Unités de Production et de leurs réseaux de concessionnaires
+                      Consolidation temps réel des 3 régions
                     </p>
                   </div>
                 </div>
@@ -523,10 +552,10 @@ export default function DirectionPage() {
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <Factory className="w-4 h-4 text-[#D90016]" />
-                  Comparatif Consolidé des 3 Unités de Production VMS
+                  Comparatif Régional des Unités
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Supervision des capacités d&apos;entrepôt, demande agrégée et santé des clusters régionaux
+                  Capacités de stockage et saturation des entrepôts
                 </p>
               </div>
             </div>
@@ -588,10 +617,10 @@ export default function DirectionPage() {
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <ArrowRightLeft className="w-4 h-4 text-[#D90016]" />
-                  Arbitrages Exécutifs : Transferts Stratégiques Inter-Unités
+                  Arbitrages Stratégiques Inter-Unités
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Actions de haut niveau nécessitant la signature de la Direction Centrale (§4.3 règle 3)
+                  Signature centrale des flux inter-régionaux
                 </p>
               </div>
             </div>
@@ -896,10 +925,10 @@ export default function DirectionPage() {
         )}
       </main>
 
-      {/* Pied de page */}
-      <footer className="border-t border-slate-200 bg-white px-6 py-4 text-center text-xs text-slate-500">
-        VMS SMART &bull; Espace Direction Générale &bull; Défi Hackathon VMS Industrie 2026
-      </footer>
+        <footer className="border-t border-slate-200/80 bg-white px-6 py-3 text-center text-[11px] text-slate-400 mt-auto">
+          VMS SMART &bull; Espace Direction Générale &bull; Défi Hackathon VMS Industrie 2026
+        </footer>
+      </div>
     </div>
   );
 }
