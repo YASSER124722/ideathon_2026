@@ -357,44 +357,6 @@ export default function UniteDeProductionPage() {
         </header>
 
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        {/* ── GUIDE RAPIDE MODE D'EMPLOI UP ── */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 rounded-xl bg-red-50 text-[#D90016] shrink-0 mt-0.5">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold text-slate-900">
-                    Comment piloter cette unité ? &bull; Scénario Démo Unité de Production
-                  </h2>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/10 text-[#D90016] uppercase">
-                    Rôle 2 : Chef d&apos;Unité Régionale
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                  L&apos;Unité de Production supervise son entrepôt régional et ses agences. Elle arbitre les pénuries en approuvant les transferts inter-agences et déclenche les séries d&apos;assemblage usine.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-                <span className="w-5 h-5 rounded-full bg-[#D90016] text-white text-[10px] font-bold flex items-center justify-center">1</span>
-                <span>Détecter pénurie Alger vs Blida</span>
-              </span>
-              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-                <span className="w-5 h-5 rounded-full bg-[#27364B] text-white text-[10px] font-bold flex items-center justify-center">2</span>
-                <span>Valider dans Approbations</span>
-              </span>
-              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-                <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center">3</span>
-                <span>Audit immuable généré</span>
-              </span>
-            </div>
-          </div>
-        </div>
 
         {/* En-tête Titre UP */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">

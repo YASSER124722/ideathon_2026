@@ -299,44 +299,6 @@ export default function DirectionPage() {
         </header>
 
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        {/* ── GUIDE RAPIDE MODE D'EMPLOI DIRECTION ── */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 rounded-xl bg-red-50 text-[#D90016] shrink-0 mt-0.5">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold text-slate-900">
-                    Comment piloter au niveau national ? &bull; Scénario Démo Direction Générale
-                  </h2>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/10 text-[#D90016] uppercase">
-                    Rôle 3 : Gouvernance Centrale
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                  La Direction Générale consolide la vision d&apos;ensemble des 3 Unités de Production, arbitre les transferts stratégiques inter-unités et audite la sécurité cyber.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-                <span className="w-5 h-5 rounded-full bg-[#D90016] text-white text-[10px] font-bold flex items-center justify-center">1</span>
-                <span>Superviser courbe nationale</span>
-              </span>
-              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-                <span className="w-5 h-5 rounded-full bg-[#27364B] text-white text-[10px] font-bold flex items-center justify-center">2</span>
-                <span>Signer transferts inter-UP</span>
-              </span>
-              <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-                <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center">3</span>
-                <span>Contrôler cloisonnement RBAC</span>
-              </span>
-            </div>
-          </div>
-        </div>
 
         {/* Titre & Résumé */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">

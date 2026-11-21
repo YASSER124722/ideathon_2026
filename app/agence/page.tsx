@@ -396,44 +396,6 @@ export default function AgenceDashboard() {
         </div>
       )}
 
-      {/* ── GUIDE RAPIDE MODE D'EMPLOI POUR LA DÉMO ── */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs mb-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-red-50 text-[#D90016] shrink-0 mt-0.5">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold text-slate-900">
-                  Comment utiliser cet écran ? &bull; Scénario Démo Agence
-                </h2>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D90016]/10 text-[#D90016] uppercase">
-                  Rôle 1 : Concessionnaire
-                </span>
-              </div>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                Ce tableau de bord permet à l&apos;agence de surveiller ses stocks de motos, anticiper la demande via la méthode WMA, et rééquilibrer ses stocks en temps réel.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-              <span className="w-5 h-5 rounded-full bg-[#D90016] text-white text-[10px] font-bold flex items-center justify-center">1</span>
-              <span>Constater rupture Jumper 150</span>
-            </span>
-            <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-              <span className="w-5 h-5 rounded-full bg-[#27364B] text-white text-[10px] font-bold flex items-center justify-center">2</span>
-              <span>Demander Réappro UP</span>
-            </span>
-            <span className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center gap-1.5 font-medium">
-              <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center">3</span>
-              <span>Confirmer Réception en direct</span>
-            </span>
-          </div>
-        </div>
-      </div>
 
       {/* ── BARRE SUPÉRIEURE D'ACTION RAPIDE (Agence Alger Centre) ── */}
       <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs mb-6">
